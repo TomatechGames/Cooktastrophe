@@ -5,12 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Management;
 
-public class VRPlayerInput : MonoBehaviour
+public class VRPlayerInput : BasePlatformInput
 {
     [SerializeField]
     InputActionReference movementInput;
-    [SerializeField]
-    float moveSpeed = 1f;
     [SerializeField]
     Vector2 latestMoveInput;
 
@@ -20,13 +18,16 @@ public class VRPlayerInput : MonoBehaviour
     [SerializeField]
     Transform leftHandRef;
 
+    public override Vector3 MoveDir => 
+                (FlattenDir(leftHandRef.forward) * latestMoveInput.y) +
+                (FlattenDir(leftHandRef.right) * latestMoveInput.x);
 
     private void Start()
     {
-        if (!XRGeneralSettings.Instance.Manager.activeLoader)
-        {
+        if (XRGeneralSettings.Instance.Manager.activeLoader)
+            GetComponentInParent<PlayerMovementManager>().PlatformInput = this;
+        else
             enabled = false;
-        }
     }
 
     private void OnEnable()
@@ -52,18 +53,6 @@ public class VRPlayerInput : MonoBehaviour
     {
         latestMoveInput = obj.ReadValue<Vector2>();
     }
-
-    private void Update()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        rigRef.velocity = (
-            (
-                (FlattenDir(leftHandRef.forward) * latestMoveInput.y) +
-                (FlattenDir(leftHandRef.right) * latestMoveInput.x)
-            ) *
-            (moveSpeed));
-    }
-
 
     public Vector3 FlattenDir(Vector3 initial)
     {

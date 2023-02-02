@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Inspector
   m_RootView: {fileID: 4}
   m_MinSize: {x: 875, y: 321}
   m_MaxSize: {x: 10000, y: 10000}
@@ -42,9 +42,9 @@ MonoBehaviour:
     x: 551
     y: 0
     width: 543
-    height: 319
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+    height: 339
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 25}
   m_Panes:
   - {fileID: 25}
@@ -69,13 +69,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 628
+    y: 608
     width: 1094
-    height: 319
+    height: 339
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 6884
+  controlID: 127
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 153
+  controlID: 151
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 19
+  controlID: 42
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 6883
+  controlID: 126
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: InputActionEditorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -293,18 +293,18 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1094
-    height: 628
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 19}
+    height: 608
+  m_MinSize: {x: 602, y: 321}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 19}
   - {fileID: 20}
   - {fileID: 21}
   - {fileID: 22}
   - {fileID: 16}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 4
+  m_LastSelected: 0
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -323,7 +323,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 551
-    height: 319
+    height: 339
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 23}
@@ -350,8 +350,8 @@ MonoBehaviour:
     y: 0
     width: 517
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 24}
   m_Panes:
   - {fileID: 24}
@@ -378,9 +378,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 860
-    y: 701
+    y: 681
     width: 541
-    height: 298
+    height: 318
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -413,7 +413,7 @@ MonoBehaviour:
     x: 309
     y: 73
     width: 1092
-    height: 607
+    height: 587
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -447,9 +447,9 @@ MonoBehaviour:
     m_SearchString: 
   m_ActionsTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 8797deba
-    m_LastClickedID: -1159817337
-    m_ExpandedIDs: 2abde4b0f4b94fc30486eae757a0ee19daf7cf23a2cb9b3147e93b4278a71574
+    m_SelectedIDs: 78a71574
+    m_LastClickedID: 1947576184
+    m_ExpandedIDs: 2abde4b0f4b94fc30486eae757a0ee199cfe7823daf7cf23a2cb9b3147e93b4278a71574
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -471,7 +471,7 @@ MonoBehaviour:
     m_AdvancedDropdownState:
       states:
       - itemId: 371857150
-        selectedIndex: 5
+        selectedIndex: 4
         scroll: {x: 0, y: 0}
       - itemId: 1845683271
         selectedIndex: 0
@@ -494,6 +494,45 @@ MonoBehaviour:
       - itemId: -2062759328
         selectedIndex: -1
         scroll: {x: 0, y: 0}
+      - itemId: 1943893468
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: 995250047
+        selectedIndex: 2
+        scroll: {x: 0, y: 0}
+      - itemId: 1081013944
+        selectedIndex: 2
+        scroll: {x: 0, y: 80.5}
+      - itemId: 81547302
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: -1055541031
+        selectedIndex: -1
+        scroll: {x: 0, y: 43}
+      - itemId: -1925353306
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: -1647343921
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: 543302097
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: -1415197782
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: 910436732
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: 656259478
+        selectedIndex: 0
+        scroll: {x: 0, y: 0}
+      - itemId: -826161340
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: -362921351
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
     m_ManualPathEditMode: 0
   m_ActionAssetManager:
     m_AssetObjectForEditing: {fileID: 0}
@@ -505,9 +544,9 @@ MonoBehaviour:
       \"actions\": [\n                {\n                    \"name\": \"Movement\",\n                   
       \"type\": \"Value\",\n                    \"id\": \"dfded785-fdca-4173-82e1-70e7b56cc80d\",\n                   
       \"expectedControlType\": \"Vector2\",\n                    \"processors\":
-      \"\",\n                    \"interactions\": \"\",\n                    \"initialStateCheck\":
-      true\n                },\n                {\n                    \"name\":
-      \"LookDelta\",\n                    \"type\": \"Value\",\n                   
+      \"NormalizeVector2\",\n                    \"interactions\": \"\",\n                   
+      \"initialStateCheck\": true\n                },\n                {\n                   
+      \"name\": \"LookDelta\",\n                    \"type\": \"Value\",\n                   
       \"id\": \"908fd656-2a14-433d-aed2-94b2189769a2\",\n                    \"expectedControlType\":
       \"Vector2\",\n                    \"processors\": \"\",\n                   
       \"interactions\": \"\",\n                    \"initialStateCheck\": true\n               
@@ -587,17 +626,78 @@ MonoBehaviour:
       \"\",\n                    \"processors\": \"\",\n                    \"groups\":
       \"M&KB\",\n                    \"action\": \"CombineHands\",\n                   
       \"isComposite\": false,\n                    \"isPartOfComposite\": false\n               
+      }\n            ]\n        },\n        {\n            \"name\": \"PlayerVR\",\n           
+      \"id\": \"d247faac-bbaa-41a7-b0f4-7ec02a4be670\",\n            \"actions\":
+      [\n                {\n                    \"name\": \"Movement\",\n                   
+      \"type\": \"Value\",\n                    \"id\": \"2c5a2f5c-3841-4138-9c92-7fa23b4bdd9c\",\n                   
+      \"expectedControlType\": \"Vector2\",\n                    \"processors\":
+      \"NormalizeVector2\",\n                    \"interactions\": \"\",\n                   
+      \"initialStateCheck\": true\n                },\n                {\n                   
+      \"name\": \"LeftHandPickup\",\n                    \"type\": \"Button\",\n                   
+      \"id\": \"d1b7c957-3449-45f0-8ab3-bc20c2bd9b3b\",\n                    \"expectedControlType\":
+      \"Button\",\n                    \"processors\": \"\",\n                   
+      \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
+      },\n                {\n                    \"name\": \"RightHandPickup\",\n                   
+      \"type\": \"Button\",\n                    \"id\": \"601e59dc-db25-4e41-b1e5-62a8a6aff4ce\",\n                   
+      \"expectedControlType\": \"Button\",\n                    \"processors\": \"\",\n                   
+      \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
+      },\n                {\n                    \"name\": \"LeftHandUse\",\n                   
+      \"type\": \"Button\",\n                    \"id\": \"74f9821b-8cd8-4033-9b1d-18f69b7e3cc7\",\n                   
+      \"expectedControlType\": \"Button\",\n                    \"processors\": \"\",\n                   
+      \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
+      },\n                {\n                    \"name\": \"RightHandUse\",\n                   
+      \"type\": \"Button\",\n                    \"id\": \"e2a72b4d-4cb1-434e-af18-5f9940e7b80e\",\n                   
+      \"expectedControlType\": \"Button\",\n                    \"processors\": \"\",\n                   
+      \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
+      }\n            ],\n            \"bindings\": [\n                {\n                   
+      \"name\": \"\",\n                    \"id\": \"c13c59ee-7828-4074-adae-756bf9f8b89d\",\n                   
+      \"path\": \"<OculusTouchController>{LeftHand}/thumbstick\",\n                   
+      \"interactions\": \"\",\n                    \"processors\": \"\",\n                   
+      \"groups\": \"XR\",\n                    \"action\": \"Movement\",\n                   
+      \"isComposite\": false,\n                    \"isPartOfComposite\": false\n               
+      },\n                {\n                    \"name\": \"\",\n                   
+      \"id\": \"45b7c335-a4e2-4910-bafc-596adb645537\",\n                    \"path\":
+      \"<OculusTouchController>{LeftHand}/gripPressed\",\n                    \"interactions\":
+      \"\",\n                    \"processors\": \"\",\n                    \"groups\":
+      \"XR\",\n                    \"action\": \"LeftHandPickup\",\n                   
+      \"isComposite\": false,\n                    \"isPartOfComposite\": false\n               
+      },\n                {\n                    \"name\": \"\",\n                   
+      \"id\": \"56e174ca-25cb-475d-881b-cd67de32bad2\",\n                    \"path\":
+      \"<OculusTouchController>{LeftHand}/triggerPressed\",\n                   
+      \"interactions\": \"\",\n                    \"processors\": \"\",\n                   
+      \"groups\": \"XR\",\n                    \"action\": \"LeftHandUse\",\n                   
+      \"isComposite\": false,\n                    \"isPartOfComposite\": false\n               
+      },\n                {\n                    \"name\": \"\",\n                   
+      \"id\": \"cb216e2c-da82-4075-be67-c978c6deb5eb\",\n                    \"path\":
+      \"<OculusTouchController>{RightHand}/gripPressed\",\n                    \"interactions\":
+      \"\",\n                    \"processors\": \"\",\n                    \"groups\":
+      \"XR\",\n                    \"action\": \"RightHandPickup\",\n                   
+      \"isComposite\": false,\n                    \"isPartOfComposite\": false\n               
+      },\n                {\n                    \"name\": \"\",\n                   
+      \"id\": \"2acedb52-5376-43e3-9ed2-212dfe59715f\",\n                    \"path\":
+      \"<OculusTouchController>{RightHand}/triggerPressed\",\n                   
+      \"interactions\": \"\",\n                    \"processors\": \"\",\n                   
+      \"groups\": \"XR\",\n                    \"action\": \"RightHandUse\",\n                   
+      \"isComposite\": false,\n                    \"isPartOfComposite\": false\n               
       }\n            ]\n        }\n    ],\n    \"controlSchemes\": [\n        {\n           
       \"name\": \"M&KB\",\n            \"bindingGroup\": \"M&KB\",\n            \"devices\":
       [\n                {\n                    \"devicePath\": \"<Keyboard>\",\n                   
       \"isOptional\": false,\n                    \"isOR\": false\n               
       },\n                {\n                    \"devicePath\": \"<Mouse>\",\n                   
       \"isOptional\": false,\n                    \"isOR\": false\n               
+      }\n            ]\n        },\n        {\n            \"name\": \"XR\",\n           
+      \"bindingGroup\": \"XR\",\n            \"devices\": [\n                {\n                   
+      \"devicePath\": \"<XRHMD>\",\n                    \"isOptional\": false,\n                   
+      \"isOR\": false\n                },\n                {\n                   
+      \"devicePath\": \"<XRController>{LeftHand}\",\n                    \"isOptional\":
+      false,\n                    \"isOR\": false\n                },\n               
+      {\n                    \"devicePath\": \"<XRController>{RightHand}\",\n                   
+      \"isOptional\": false,\n                    \"isOR\": false\n               
       }\n            ]\n        }\n    ]\n}"
     m_IsDirty: 0
   m_Toolbar:
     m_IsDirty: 0
-    m_SelectedControlSchemeIndex: 0
+    m_SelectedControlSchemeIndex: 1
     m_SelectedDeviceRequirementIndex: -1
     m_ControlSchemes:
     - m_Name: M&KB
@@ -606,6 +706,15 @@ MonoBehaviour:
       - m_ControlPath: <Keyboard>
         m_Flags: 0
       - m_ControlPath: <Mouse>
+        m_Flags: 0
+    - m_Name: XR
+      m_BindingGroup: XR
+      m_DeviceRequirements:
+      - m_ControlPath: <XRHMD>
+        m_Flags: 0
+      - m_ControlPath: <XRController>{LeftHand}
+        m_Flags: 0
+      - m_ControlPath: <XRController>{RightHand}
         m_Flags: 0
     m_SearchText: 
   m_DirtyTitle:
@@ -655,21 +764,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 66d5feffb6d7feff209d0000509d0000569d0000
+      m_ExpandedIDs: 46e9daff588addff1c8cddff0aa1ddffe0a1ddffb0a2ddff1a27deff24fbfffff27400000a750000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: ProbuilderCube
-        m_OriginalName: ProbuilderCube
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -898000
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 9}
       m_SearchString: 
@@ -741,7 +850,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 10810000
     m_LastClickedID: 33040
-    m_ExpandedIDs: 
+    m_ExpandedIDs: 00000000860200003e76000040760000427600004476000046760000487600004a760000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -769,7 +878,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000220000000406000054070000ac0700007c9d0000e6e50000dc100100e0100100
+    m_ExpandedIDs: ffffffff000000003e760000407600004276000046760000487600004a76000082ae000084ae0000a8ae0000e8cc0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -849,7 +958,7 @@ MonoBehaviour:
     x: 309
     y: 73
     width: 1092
-    height: 607
+    height: 587
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1168,9 +1277,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.4962925, y: 1.471469, z: 2.4499154}
+    m_Target: {x: -2.554174, y: 0.9797365, z: 0.60406655}
     speed: 2
-    m_Value: {x: 1.4962925, y: 1.471469, z: 2.4499154}
+    m_Value: {x: -2.554174, y: 0.9797365, z: 0.60406655}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1195,7 +1304,7 @@ MonoBehaviour:
         m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0, y: 0}
+      m_Size: {x: 1, y: 1}
     yGrid:
       m_Fade:
         m_Target: 1
@@ -1216,13 +1325,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.08176482, y: 0.70550245, z: -0.08247984, w: -0.69916415}
+    m_Target: {x: 0.044855203, y: -0.6933495, z: 0.04331834, w: 0.7179047}
     speed: 2
-    m_Value: {x: -0.081762664, y: 0.70548385, z: -0.08247767, w: -0.69914573}
+    m_Value: {x: 0.04377811, y: -0.6934105, z: 0.042278066, w: 0.71796787}
   m_Size:
-    m_Target: 0.8660254
+    m_Target: 1.2540419
     speed: 2
-    m_Value: 0.8660254
+    m_Value: 1.2540419
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1305,7 +1414,7 @@ MonoBehaviour:
     x: 309
     y: 73
     width: 1092
-    height: 607
+    height: 587
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1366,7 +1475,7 @@ MonoBehaviour:
     x: 309
     y: 73
     width: 1092
-    height: 607
+    height: 587
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1383,8 +1492,8 @@ MonoBehaviour:
   m_SearchText: 
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 71137e95
-    m_LastClickedID: -1786899599
+    m_SelectedIDs: c8783623
+    m_LastClickedID: 590772424
     m_ExpandedIDs: 2956c29689577ec10000000001fecd11
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1425,9 +1534,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 309
-    y: 701
+    y: 681
     width: 549
-    height: 298
+    height: 318
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1506,9 +1615,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 860
-    y: 701
+    y: 681
     width: 541
-    height: 298
+    height: 318
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1563,24 +1672,24 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 541
-      height: 277
-    m_Scale: {x: 0.25648147, y: 0.25648147}
-    m_Translation: {x: 270.5, y: 138.5}
+      height: 297
+    m_Scale: {x: 0.275, y: 0.275}
+    m_Translation: {x: 270.5, y: 148.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -1054.6571
+      x: -983.63635
       y: -540
-      width: 2109.3142
+      width: 1967.2727
       height: 1080
     m_MinimalGUI: 1
-  m_defaultScale: 0.25648147
-  m_LastWindowPixelSize: {x: 541, y: 298}
+  m_defaultScale: 0.275
+  m_LastWindowPixelSize: {x: 541, y: 318}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
-  m_XRRenderMode: 0
+  m_XRRenderMode: -1
   m_RenderTexture: {fileID: 0}

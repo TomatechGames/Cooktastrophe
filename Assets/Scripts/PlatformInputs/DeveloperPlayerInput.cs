@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Management;
 
-public class DeveloperPlayerInput : MonoBehaviour
+public class DeveloperPlayerInput : BasePlatformInput
 {
     [SerializeField]
     InputActionReference movementInput;
@@ -17,12 +17,8 @@ public class DeveloperPlayerInput : MonoBehaviour
     Vector2 latestMoveInput;
     [SerializeField]
     float sensitivity = 0.25f;
-    [SerializeField]
-    float moveSpeed = 1f;
 
     [Space]
-    [SerializeField]
-    Rigidbody rigRef;
     [SerializeField]
     Transform leftHandRef;
     [SerializeField]
@@ -32,12 +28,16 @@ public class DeveloperPlayerInput : MonoBehaviour
     [SerializeField]
     Transform rightHandTarget;
 
+    public override Vector3 MoveDir => 
+                (FlattenDir(transform.forward) * latestMoveInput.y) +
+                (FlattenDir(transform.right) * latestMoveInput.x);
+
     private void Start()
     {
-        if (XRGeneralSettings.Instance.Manager.activeLoader)
-        {
+        if (!XRGeneralSettings.Instance.Manager.activeLoader)
+            GetComponentInParent<PlayerMovementManager>().PlatformInput = this;
+        else
             enabled = false;
-        }
     }
 
     private void OnEnable()
@@ -82,12 +82,6 @@ public class DeveloperPlayerInput : MonoBehaviour
         pitchAndYaw.y = ((pitchAndYaw.y+540)%360)-180;
 
         transform.rotation = Quaternion.Euler(pitchAndYaw);
-        rigRef.velocity = (
-            (
-                (FlattenDir(transform.forward) * latestMoveInput.y) +
-                (FlattenDir(transform.right) * latestMoveInput.x)
-            ) * 
-            (moveSpeed));
 
         if (leftHandRef && leftHandTarget)
             leftHandRef.SetPositionAndRotation(leftHandTarget.position, leftHandTarget.rotation);
