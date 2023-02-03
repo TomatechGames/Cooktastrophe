@@ -1,5 +1,5 @@
 {
-    "name": "Input Action Asset",
+    "name": "PancakeInputActions",
     "maps": [
         {
             "name": "Player2D",
@@ -15,11 +15,20 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LookDelta",
+                    "name": "CamRotX",
                     "type": "Value",
-                    "id": "908fd656-2a14-433d-aed2-94b2189769a2",
+                    "id": "af00459e-aa06-4cb0-a046-bae6a604f237",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "ScaleVector2(y=0)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "CamRotY",
+                    "type": "Value",
+                    "id": "e1299291-6f41-4a96-9782-eb719de20c74",
+                    "expectedControlType": "Vector2",
+                    "processors": "ScaleVector2(x=0)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -63,6 +72,15 @@
                     "name": "CombineHands",
                     "type": "Button",
                     "id": "ba16ea12-d238-4066-8696-2b9c8613bfd6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SeparateHands",
+                    "type": "Button",
+                    "id": "51459ba5-a29e-44ba-8cbb-b0e6b40dcf9c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -127,17 +145,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9f6e29cf-c0b5-4efa-b301-47e799c3e2d2",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "M&KB",
-                    "action": "LookDelta",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1d4db537-e3ed-45b6-af82-0b41f9b49fac",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -190,112 +197,37 @@
                     "action": "CombineHands",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "PlayerVR",
-            "id": "d247faac-bbaa-41a7-b0f4-7ec02a4be670",
-            "actions": [
-                {
-                    "name": "Movement",
-                    "type": "Value",
-                    "id": "2c5a2f5c-3841-4138-9c92-7fa23b4bdd9c",
-                    "expectedControlType": "Vector2",
-                    "processors": "NormalizeVector2",
-                    "interactions": "",
-                    "initialStateCheck": true
                 },
-                {
-                    "name": "LeftHandPickup",
-                    "type": "Button",
-                    "id": "d1b7c957-3449-45f0-8ab3-bc20c2bd9b3b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RightHandPickup",
-                    "type": "Button",
-                    "id": "601e59dc-db25-4e41-b1e5-62a8a6aff4ce",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "LeftHandUse",
-                    "type": "Button",
-                    "id": "74f9821b-8cd8-4033-9b1d-18f69b7e3cc7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RightHandUse",
-                    "type": "Button",
-                    "id": "e2a72b4d-4cb1-434e-af18-5f9940e7b80e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
                 {
                     "name": "",
-                    "id": "c13c59ee-7828-4074-adae-756bf9f8b89d",
-                    "path": "<OculusTouchController>{LeftHand}/thumbstick",
+                    "id": "346134e0-e19d-4cfa-92b4-fae36a17589d",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "XR",
-                    "action": "Movement",
+                    "groups": "M&KB",
+                    "action": "CamRotX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "45b7c335-a4e2-4910-bafc-596adb645537",
-                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
+                    "id": "79fb5d72-948c-4c54-b0da-42ae538763c5",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "XR",
-                    "action": "LeftHandPickup",
+                    "groups": "M&KB",
+                    "action": "CamRotY",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "56e174ca-25cb-475d-881b-cd67de32bad2",
-                    "path": "<OculusTouchController>{LeftHand}/triggerPressed",
+                    "id": "a56921d0-d597-4348-b932-80d895a49375",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "XR",
-                    "action": "LeftHandUse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cb216e2c-da82-4075-be67-c978c6deb5eb",
-                    "path": "<OculusTouchController>{RightHand}/gripPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "RightHandPickup",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2acedb52-5376-43e3-9ed2-212dfe59715f",
-                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "RightHandUse",
+                    "groups": "M&KB",
+                    "action": "SeparateHands",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
