@@ -28,8 +28,6 @@ public class PancakePitchManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         mousePitchDelta.action.performed += OnMouseDelta;
-
-        mousePitchDelta.action.Enable();
     }
 
     private void OnDisable()
@@ -37,8 +35,6 @@ public class PancakePitchManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         mousePitchDelta.action.performed -= OnMouseDelta;
-
-        mousePitchDelta.action.Disable();
     }
 
     private void OnMouseDelta(InputAction.CallbackContext obj)
@@ -59,12 +55,5 @@ public class PancakePitchManager : MonoBehaviour
     {
         initial.y = 0;
         return initial.normalized;
-    }
-
-
-    static float UnsignedModulo(float value, float wrapPoint)
-    {
-        float wrapped = value % wrapPoint;
-        return wrapped < 0 ? wrapped : wrapPoint + wrapped;
     }
 }
