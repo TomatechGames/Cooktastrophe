@@ -24,7 +24,35 @@ public class ExtendedActionBasedController : ActionBasedController
             selectValueAction = selectAction.action;
 
         bool selectPressed = IsPressed(selectAction.action);
-        bool shouldBeSelected = (selectPressed && !selectBuffer) == !interactor.hasSelection;
+        bool shouldBeSelected;
+
+        if (interactor.hasSelection)
+        {
+            //Debug.Log("hasSelection");
+            shouldBeSelected = !(
+                selectPressed && 
+                !selectBuffer && 
+                interactor.firstInteractableSelected is IXRHoverInteractable hoverable && 
+                hoverable.interactorsHovering
+                    .Exists(i=>i is XRSocketInteractor socket && !socket.hasSelection));
+
+            if(selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
+            {
+                //Debug.Log("Welp");
+                Physics.Raycast(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, out var hit, 5);
+                if (hit.collider && hit.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.interactablesSelected.Count==0)
+                {
+                    var target = interactor.firstInteractableSelected;
+                    if(interactor.isPerformingManualInteraction)
+                        interactor.EndManualInteraction();
+                    socket.StartManualInteraction(target);
+                }
+            }
+        }
+        else
+        {
+            shouldBeSelected = (selectPressed && !selectBuffer);
+        }
 
         controllerState.selectInteractionState.SetFrameState(shouldBeSelected, ReadValue(selectValueAction));
 

@@ -69,9 +69,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CombineHands",
+                    "name": "CombineToLeft",
                     "type": "Button",
                     "id": "ba16ea12-d238-4066-8696-2b9c8613bfd6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CombineToRight",
+                    "type": "Button",
+                    "id": "c03ebb53-e4b2-4f28-b319-074cc31fab00",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -167,6 +176,17 @@
                 },
                 {
                     "name": "",
+                    "id": "1ee15e5f-a10d-474c-a00e-0ec00db90e67",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "M&KB",
+                    "action": "RightHandPickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5af5d7ec-4c19-4677-8d3c-52f0d64c1941",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -190,11 +210,11 @@
                 {
                     "name": "",
                     "id": "63e60415-d46e-4f94-896f-2ec475288252",
-                    "path": "<Mouse>/middleButton",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "M&KB",
-                    "action": "CombineHands",
+                    "action": "CombineToLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -223,11 +243,33 @@
                 {
                     "name": "",
                     "id": "a56921d0-d597-4348-b932-80d895a49375",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "M&KB",
                     "action": "SeparateHands",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1261ca31-7dbc-4570-866b-7bae5a630368",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "M&KB",
+                    "action": "SeparateHands",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8e25eae-03b8-4a76-9769-bbe96ab13be5",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "M&KB",
+                    "action": "CombineToRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
