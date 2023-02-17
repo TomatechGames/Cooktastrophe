@@ -87,13 +87,57 @@ public class GrabItemDatabase : ScriptableObject
     }
 }
 
-public class GrabItemReferenceAttribute : PropertyAttribute
+public class GrabItemIDReferenceAttribute : PropertyAttribute
 {
     bool inlineInspector;
     public bool InlineInspector => inlineInspector;
-    public GrabItemReferenceAttribute(bool inlineInspector = false)
+    public GrabItemIDReferenceAttribute(bool inlineInspector = false)
     {
         this.inlineInspector = inlineInspector;
+    }
+}
+
+public class GrabItemReference
+{
+    static GrabItemDatabase database;
+    public static void SetDatabase(GrabItemDatabase _database)
+    {
+        database = _database;
+    }
+
+    [SerializeField]
+    [GrabItemIDReference(true)]
+    int id;
+    public int Id
+    {
+        get
+        {
+            hasEntry = false;
+            return id;
+        }
+        set
+        {
+            id = value;
+
+        }
+    }
+    bool hasEntry;
+    GrabItemEntry entry;
+    public GrabItemEntry Entry
+    {
+        get
+        {
+            if (hasEntry)
+                return entry;
+
+            if (!database)
+                entry = null;
+            else
+                entry = database[id];
+
+            hasEntry = true;
+            return entry;
+        }
     }
 }
 
@@ -131,15 +175,15 @@ public class GrabItemEntry
 [System.Serializable]
 public struct CombinationRecipe
 {
-    [GrabItemReference, SerializeField]
+    [GrabItemIDReference, SerializeField]
     int ingredientA;
     public int IngredientA => ingredientA;
 
-    [GrabItemReference, SerializeField]
+    [GrabItemIDReference, SerializeField]
     int ingredientB;
     public int IngredientB => ingredientB;
 
-    [GrabItemReference, SerializeField]
+    [GrabItemIDReference, SerializeField]
     int result;
     public int Result => result;
 
@@ -160,7 +204,7 @@ public enum ProcessType
 [System.Serializable]
 public struct ProcessRecipe
 {
-    [GrabItemReference, SerializeField]
+    [GrabItemIDReference, SerializeField]
     int ingredient;
     public int Ingredient => ingredient;
 
@@ -168,7 +212,7 @@ public struct ProcessRecipe
     ProcessType process;
     public ProcessType Process => process;
 
-    [GrabItemReference, SerializeField]
+    [GrabItemIDReference, SerializeField]
     int result;
     public int Result => result;
 

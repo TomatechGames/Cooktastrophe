@@ -10,12 +10,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-[CustomPropertyDrawer(typeof(GrabItemReferenceAttribute))]
-public class GrabItemReferencePropertyDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(GrabItemIDReferenceAttribute))]
+public class GrabItemIDReferencePropertyDrawer : PropertyDrawer
 {
     public override VisualElement CreatePropertyGUI(SerializedProperty property)
     {
-        GrabItemReferenceAttribute refAttribute = attribute as GrabItemReferenceAttribute;
+        GrabItemIDReferenceAttribute refAttribute = attribute as GrabItemIDReferenceAttribute;
         VisualElement rootElement;
         VisualElement contentElement;
         Box inlineInspectorBox = null;
