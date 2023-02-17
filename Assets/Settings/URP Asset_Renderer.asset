@@ -1,41 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6631855561876130827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 766208ec9938459428230305081e6c57, type: 3}
-  m_Name: HoldableOutlines
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  renderPassEvent: 300
-  outlinesLayerMask:
-    serializedVersion: 2
-    m_Bits: 192
-  outlinesOccluderLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  outlineSettings:
-    outlineColor: {r: 0, g: 0, b: 0, a: 1}
-    outlineScale: 1
-    depthThreshold: 2
-    robertsCrossMultiplier: 42
-    normalThreshold: 0.4
-    steepAngleThreshold: 0.2
-    steepAngleMultiplier: 23
-  viewSpaceNormalsTextureSettings:
-    colorFormat: 0
-    depthBufferBits: 16
-    filterMode: 0
-    backgroundColor: {r: 0, g: 0, b: 0, a: 1}
-    perObjectData: 0
-    enableDynamicBatching: 0
-    enableInstancing: 0
 --- !u!114 &-1932394528067068499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,8 +40,7 @@ MonoBehaviour:
       type: 3}
   m_RendererFeatures:
   - {fileID: -1932394528067068499}
-  - {fileID: -6631855561876130827}
-  m_RendererFeatureMap: ad5da73c6ac12ee5f5b3ace880eaf6a3
+  m_RendererFeatureMap: ad5da73c6ac12ee5
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

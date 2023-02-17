@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -42,10 +44,22 @@ public class InputActionReferencePropertyDrawer : PropertyDrawer
         if (GUI.Button(newRect, EditorGUIUtility.IconContent("SearchDatabase Icon")))
         {
             SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(newRect.center)),
-                    ScriptableObject.CreateInstance<InputActionSearchProvider>()
+
+                    ScriptableObject.CreateInstance<GenericSearchProvider>()
+
+                    .SetChoices(
+                        Resources.FindObjectsOfTypeAll<InputActionAsset>()
+                            .SelectMany(a => AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(a))
+                            .Where(a => a is InputActionReference)
+                            .Select(a => a as object))
+                            .ToList(), true
+                        )
+
+                    .SetKeyGenerator((e) => (e as InputActionReference).name)
+
                     .SetActionOnSelect(e =>
                     {
-                        property.objectReferenceValue = e;
+                        property.objectReferenceValue = e as Object;
                         property.serializedObject.ApplyModifiedProperties();
                     }));
         }
