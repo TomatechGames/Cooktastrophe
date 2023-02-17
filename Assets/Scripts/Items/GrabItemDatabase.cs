@@ -25,15 +25,13 @@ public class GrabItemDatabase : ScriptableObject
         .Where(c => c.IngredientA == filter || c.IngredientB == filter || c.Result == filter)
         .ToList();
     public CombinationRecipe GetCombinationEntry(int filterA, int filterB) => m_CombinationRecipes
-        .Where(c => (c.IngredientA == filterA && c.IngredientB == filterB))
-        .First();
+        .FirstOrDefault(c => (c.IngredientA == filterA && c.IngredientB == filterB));
 
     public List<ProcessRecipe> GetProcesses(int filter) => m_ProcessRecipes
         .Where(c => c.Ingredient == filter || c.Result == filter)
         .ToList();
     public ProcessRecipe GetProcessEntry(int filter, ProcessType process) => m_ProcessRecipes
-        .Where(c => c.Ingredient == filter && c.Process == process)
-        .First();
+        .FirstOrDefault(c => c.Ingredient == filter && c.Process == process);
 
     bool GenerateDictionary()
     {
@@ -156,8 +154,8 @@ public class GrabItemEntry
     public Texture2D DefaultTexture => defaultTexture;
 
     [SerializeField]
-    Bounds hitbox = new(new(0,0.5f,0),Vector3.one);
-    public Bounds Hitbox => hitbox;
+    Vector3 hitbox = Vector3.one;
+    public Vector3 Hitbox => hitbox;
 
     [SerializeField]
     int id;
@@ -172,7 +170,7 @@ public class GrabItemEntry
 }
 
 [System.Serializable]
-public struct CombinationRecipe
+public class CombinationRecipe
 {
     [GrabItemIDReference, SerializeField]
     int ingredientA;
@@ -201,7 +199,7 @@ public enum ProcessType
 }
 
 [System.Serializable]
-public struct ProcessRecipe
+public class ProcessRecipe
 {
     [GrabItemIDReference, SerializeField]
     int ingredient;

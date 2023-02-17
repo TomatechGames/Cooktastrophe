@@ -47,6 +47,10 @@ public abstract class SearchProviderBase<T> : ScriptableObject, ISearchWindowPro
 
         entryList.Sort((a, b) =>
         {
+            if(a=="--NONE--")
+                return -1;
+            else if(b=="--NONE--")
+                return 1;
             var splitA = a.Split("/");
             var splitB = b.Split("/");
             for (int i = 0; i < splitA.Length; i++)
@@ -124,9 +128,9 @@ public class GenericSearchProvider : SearchProviderBase<object>
         searchList.ForEach(o => {
             string key;
             if (o == null)
-                key = "NONE";
+                key = "--NONE--";
             else
-                key = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(keyGenerator(o));
+                key = keyGenerator(o).Replace('-','_');
             if (!dict.ContainsKey(key))
                 dict.Add(key, o);
 

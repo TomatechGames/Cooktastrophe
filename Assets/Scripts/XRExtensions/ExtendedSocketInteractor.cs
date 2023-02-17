@@ -140,7 +140,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
     {
         if (!HasParent)
             return new();
-        if (parentInteractable.isSelected && (parentInteractable.firstInteractorSelecting as MonoBehaviour).TryGetComponent<ExtendedSocketInteractor>(out var parentSocket))
+        if (parentInteractable.isSelected && (parentInteractable.firstInteractorSelecting as MonoBehaviour).TryGetComponent<ExtendedSocketInteractor>(out var parentSocket) && parentSocket!=this)
         {
             var parentAncestors = parentSocket.GetAncestorList().ToList();
             parentAncestors.Add(parentInteractable);

@@ -16,6 +16,8 @@ public class PancakeCombinationManager : MonoBehaviour
     InputActionReference combineRight;
     [SerializeField]
     InputActionReference split;
+    [SerializeField]
+    InputActionReference process;
 
     [Space]
     [SerializeField]
@@ -36,6 +38,7 @@ public class PancakeCombinationManager : MonoBehaviour
         combineLeft.action.performed += CombineLeft;
         combineRight.action.performed += CombineRight;
         split.action.performed += Split;
+        process.action.performed += Process;
     }
 
     private void OnDisable()
@@ -43,6 +46,7 @@ public class PancakeCombinationManager : MonoBehaviour
         combineLeft.action.performed -= CombineLeft;
         combineRight.action.performed -= CombineRight;
         split.action.performed -= Split;
+        process.action.performed -= Process;
     }
 
     private void CombineLeft(InputAction.CallbackContext obj) => Combine(rightHand, leftHand);
@@ -53,13 +57,14 @@ public class PancakeCombinationManager : MonoBehaviour
     {
         if (fromHand.interactablesSelected.Count != 1 || toHand.interactablesSelected.Count != 1)
             return;
-        var movingItem = fromHand.firstInteractableSelected;
+        if (TryUseRecipe(fromHand, toHand))
+            return;
 
+        var movingItem = fromHand.firstInteractableSelected;
         var destinationItemBehavior = toHand.firstInteractableSelected as MonoBehaviour;
-        var potentialSockets = GetSocketEndpoints(destinationItemBehavior);
         //Debug.Log(string.Join(", ",potentialSockets));
 
-        var selectedSocket = potentialSockets.FirstOrDefault();
+        var selectedSocket = GetSocketEndpoints(destinationItemBehavior).FirstOrDefault();
         if (selectedSocket)
         {
             var prevInteractor = (movingItem.firstInteractorSelecting as XRBaseInteractor);
@@ -67,6 +72,65 @@ public class PancakeCombinationManager : MonoBehaviour
                 prevInteractor.EndManualInteraction();
             selectedSocket.StartManualInteraction(movingItem);
         }
+    }
+
+    //TODO: move to relevant class
+    private bool TryUseRecipe(XRBaseControllerInteractor fromHand, XRBaseControllerInteractor toHand)
+    {
+        var itemA = fromHand.firstInteractableSelected as MonoBehaviour;
+
+        if (!itemA)
+            return false;
+        var validatedA = itemA.TryGetComponent<GrabItemComponent>(out var sourceGrabItem);
+        if(!validatedA)
+            return false;
+
+        var itemB = toHand.firstInteractableSelected as MonoBehaviour;
+
+        var selectedSocket = GetSocketEndpoints(itemB, true).FirstOrDefault();
+        if (selectedSocket)
+            itemB = selectedSocket.firstInteractableSelected as MonoBehaviour;
+
+        if(!itemB)
+            return false;
+        var validatedB = itemA.TryGetComponent<GrabItemComponent>(out var destGrabItem);
+        if (!validatedB)
+            return false;
+
+        var recipe = GrabItemDatabaseHolder.Database.GetCombinationEntry(sourceGrabItem.GrabItem.Id, destGrabItem.GrabItem.Id );
+        if (recipe == null) 
+            recipe = GrabItemDatabaseHolder.Database.GetCombinationEntry(destGrabItem.GrabItem.Id, sourceGrabItem.GrabItem.Id);
+
+        if (recipe == null)
+            return false;
+
+        destGrabItem.SetNewItemID(recipe.Result);
+        Destroy(itemA.gameObject);
+
+        return true;
+    }
+
+    private void Process(InputAction.CallbackContext obj)
+    {
+        Process(leftHand);
+        Process(rightHand);
+    }
+
+    private void Process(XRBaseControllerInteractor targetHand)
+    {
+        var itemA = targetHand.firstInteractableSelected as MonoBehaviour;
+
+        if (!itemA)
+            return;
+        var validatedA = itemA.TryGetComponent<GrabItemComponent>(out var sourceGrabItem);
+        if (!validatedA)
+            return;
+
+        var recipe = GrabItemDatabaseHolder.Database.GetProcessEntry(sourceGrabItem.GrabItem.Id, ProcessType.Heat);
+        if (recipe == null)
+            return;
+
+        sourceGrabItem.SetNewItemID(recipe.Result);
     }
 
     private void Split(InputAction.CallbackContext obj)
@@ -77,21 +141,37 @@ public class PancakeCombinationManager : MonoBehaviour
             Split(rightHand, leftHand);
     }
 
-    static List<XRSocketInteractor> GetSocketEndpoints(MonoBehaviour root)
+
+    private void Split(XRBaseControllerInteractor fromHand, XRBaseControllerInteractor toHand)
+    {
+        var sourceItemBehavior = fromHand.firstInteractableSelected as MonoBehaviour;
+        var potentialEndpoints = GetSelectableEndpoints(sourceItemBehavior);
+
+        var selectedEndpoints = potentialEndpoints.FirstOrDefault();
+        if (selectedEndpoints as MonoBehaviour)
+        {
+            var prevInteractor = (selectedEndpoints.firstInteractorSelecting as XRBaseInteractor);
+            if (prevInteractor.isPerformingManualInteraction)
+                prevInteractor.EndManualInteraction();
+            toHand.StartManualInteraction(selectedEndpoints);
+        }
+    }
+
+    static List<XRSocketInteractor> GetSocketEndpoints(MonoBehaviour root, bool withChild=false)
     {
         List<XRSocketInteractor> result = new();
-        GetSocketEndpoints(root, ref result);
+        GetSocketEndpoints(root, ref result, withChild);
         return result;
     }
-    static void GetSocketEndpoints(MonoBehaviour current, ref List<XRSocketInteractor> totalEndpoints)
+    static void GetSocketEndpoints(MonoBehaviour current, ref List<XRSocketInteractor> totalEndpoints, bool withChild)
     {
-        var currentSockets = current.GetComponentsInChildren<XRSocketInteractor>();
+        var currentSockets = current.GetComponentsInChildren<XRSocketInteractor>().ToList();
         foreach (var item in currentSockets)
         {
-            if (item.interactablesSelected.Count == 0)
+            if (withChild == (item.interactablesSelected.Count != 0))
                 totalEndpoints.Add(item);
-            else
-                GetSocketEndpoints(item.firstInteractableSelected as MonoBehaviour, ref totalEndpoints);
+            if(item.interactablesSelected.Count != 0)
+                GetSocketEndpoints(item.firstInteractableSelected as MonoBehaviour, ref totalEndpoints, withChild);
         }
     }
 
@@ -116,20 +196,5 @@ public class PancakeCombinationManager : MonoBehaviour
         }
         if (isEndpoint)
             totalEndpoints.Add(current as IXRSelectInteractable);
-    }
-
-    private void Split(XRBaseControllerInteractor fromHand, XRBaseControllerInteractor toHand)
-    {
-        var sourceItemBehavior = fromHand.firstInteractableSelected as MonoBehaviour;
-        var potentialEndpoints = GetSelectableEndpoints(sourceItemBehavior);
-
-        var selectedEndpoints = potentialEndpoints.FirstOrDefault();
-        if (selectedEndpoints as MonoBehaviour)
-        {
-            var prevInteractor = (selectedEndpoints.firstInteractorSelecting as XRBaseInteractor);
-            if(prevInteractor.isPerformingManualInteraction)
-                prevInteractor.EndManualInteraction();
-            toHand.StartManualInteraction(selectedEndpoints);
-        }
     }
 }

@@ -291,7 +291,7 @@ PrefabInstance:
     - target: {fileID: 799535724591781647, guid: 7b1591c98b8bb1a47bed87a91d822d99,
         type: 3}
       propertyPath: grabItem.id
-      value: -7444
+      value: 26158
       objectReference: {fileID: 0}
     - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
         type: 3}
@@ -1331,6 +1331,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481044947}
   m_CullTransparentMesh: 1
+--- !u!1001 &514246527
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 799535724591781647, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: grabItem.id
+      value: -16107
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.525
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541107, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541109, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 361445687}
+    - target: {fileID: 4021965047058541110, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_Name
+      value: Dummy Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021965047058541110, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7b1591c98b8bb1a47bed87a91d822d99, type: 3}
 --- !u!1 &520165436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2398,6 +2486,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 799535724591781647, guid: 7b1591c98b8bb1a47bed87a91d822d99,
         type: 3}
+      propertyPath: GrabItem.id
+      value: 26158
+      objectReference: {fileID: 0}
+    - target: {fileID: 799535724591781647, guid: 7b1591c98b8bb1a47bed87a91d822d99,
+        type: 3}
       propertyPath: grabItem.id
       value: -7444
       objectReference: {fileID: 0}
@@ -3144,34 +3237,10 @@ MonoBehaviour:
       m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MaterialPropertySetterFloat, Assembly-CSharp
-        m_MethodName: set_Value
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.2
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_HoverExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MaterialPropertySetterFloat, Assembly-CSharp
-        m_MethodName: set_Value
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_FirstSelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -5056,7 +5125,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'P: Split'
+  m_text: 'H: Process (Heat)
+
+    P: Split'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7354,6 +7425,7 @@ MonoBehaviour:
   combineRight: {fileID: -2149730887464576235, guid: d95a151cf2952f048bdc0440890c4415,
     type: 3}
   split: {fileID: -7280662605418558848, guid: d95a151cf2952f048bdc0440890c4415, type: 3}
+  process: {fileID: 5359958935875842709, guid: d95a151cf2952f048bdc0440890c4415, type: 3}
   leftHand: {fileID: 1083264761}
   rightHand: {fileID: 1983492551}
   testSocket: {fileID: 1972656281}
