@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -39,13 +40,18 @@ public class ExtendedActionBasedController : ActionBasedController
             if(selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
             {
                 //Debug.Log("Welp");
-                Physics.Raycast(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, out var hit, 5);
-                if (hit.collider && hit.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.interactablesSelected.Count==0)
+                var hits = Physics.RaycastAll(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, 5);
+                var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.interactablesSelected.Count == 0);
+
+                if (hitSocket.collider)
                 {
+                    var socket = hitSocket.collider.GetComponent<XRSocketInteractor>();
+                    //Debug.Log("socket Found");
                     var target = interactor.firstInteractableSelected;
                     if(interactor.isPerformingManualInteraction)
                         interactor.EndManualInteraction();
                     socket.StartManualInteraction(target);
+                    shouldBeSelected = false;
                 }
             }
         }

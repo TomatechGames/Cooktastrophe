@@ -16,21 +16,33 @@ MonoBehaviour:
   - name: food test 1
     mesh: {fileID: -2432090755550338912, guid: c4c7b7de5687c5340b78c52a5513a821, type: 3}
     materials: []
+    defaultTexture: {fileID: 0}
+    hitbox:
+      m_Center: {x: 0, y: 0.25, z: 0}
+      m_Extent: {x: 0.5, y: 0.25, z: 0.5}
     id: -7444
   - name: food test 2
     mesh: {fileID: 0}
     materials: []
+    defaultTexture: {fileID: 0}
+    hitbox:
+      m_Center: {x: 0, y: 0.5, z: 0}
+      m_Extent: {x: 1, y: 1, z: 1}
     id: 26158
   - name: result test
     mesh: {fileID: 0}
     materials: []
+    defaultTexture: {fileID: 0}
+    hitbox:
+      m_Center: {x: 0, y: 0.5, z: 0}
+      m_Extent: {x: 1, y: 1, z: 1}
     id: -16107
   m_CombinationRecipes:
   - ingredientA: -7444
     ingredientB: 26158
     result: -16107
   m_ProcessRecipes:
-  - ingredient: 0
+  - ingredient: -7444
     process: 0
-    result: 0
+    result: -16107
     badRecipe: 0

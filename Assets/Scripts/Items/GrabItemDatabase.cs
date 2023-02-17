@@ -97,14 +97,9 @@ public class GrabItemIDReferenceAttribute : PropertyAttribute
     }
 }
 
+[System.Serializable]
 public class GrabItemReference
 {
-    static GrabItemDatabase database;
-    public static void SetDatabase(GrabItemDatabase _database)
-    {
-        database = _database;
-    }
-
     [SerializeField]
     [GrabItemIDReference(true)]
     int id;
@@ -130,10 +125,10 @@ public class GrabItemReference
             if (hasEntry)
                 return entry;
 
-            if (!database)
+            if (!GrabItemDatabaseHolder.Database)
                 entry = null;
             else
-                entry = database[id];
+                entry = GrabItemDatabaseHolder.Database[id];
 
             hasEntry = true;
             return entry;
@@ -153,14 +148,18 @@ public class GrabItemEntry
     public Mesh Mesh => mesh;
 
     [SerializeField]
-    Material[] materials;
-    public Material[] Materials => materials;
+    List<Material> materials;
+    public List<Material> Materials => materials;
 
     [SerializeField]
     Texture2D defaultTexture;
     public Texture2D DefaultTexture => defaultTexture;
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
+    Bounds hitbox = new(new(0,0.5f,0),Vector3.one);
+    public Bounds Hitbox => hitbox;
+
+    [SerializeField]
     int id;
     public int Id => id;
     public void RegenerateID(List<int> existingIDs)

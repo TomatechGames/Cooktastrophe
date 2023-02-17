@@ -15,10 +15,18 @@ public class GrabItemPropertyDrawer : PropertyDrawer
         GrabItemDatabase database = Resources.FindObjectsOfTypeAll<GrabItemDatabase>().FirstOrDefault();
         int id = property.FindPropertyRelative("id").intValue;
 
-        VisualElement propertyPanel= new();
+        VisualElement idPanel = new();
+        var idField = new IntegerField();
+        idField.BindProperty(property.FindPropertyRelative("id"));
+        //idField.SetEnabled(false);
+        idPanel.Add(idField);
+
+        VisualElement propertyPanel= new() { style = { display = DisplayStyle.None } };
         propertyPanel.Add(new PropertyField(property.FindPropertyRelative("name")));
         propertyPanel.Add(new PropertyField(property.FindPropertyRelative("mesh")));
         propertyPanel.Add(new PropertyField(property.FindPropertyRelative("materials")));
+        propertyPanel.Add(new PropertyField(property.FindPropertyRelative("defaultTexture")));
+        propertyPanel.Add(new PropertyField(property.FindPropertyRelative("hitbox")));
 
 
         VisualElement recipePanel = new() { style = { display = DisplayStyle.None } };
@@ -72,10 +80,14 @@ public class GrabItemPropertyDrawer : PropertyDrawer
 
         Toolbar tabParent = new() { style = { borderLeftWidth = 1, borderTopWidth = 1 } };
 
+        ToolbarToggle idTab = new() { name = "id", style = { left = new StyleLength(StyleKeyword.Auto), flexShrink = 1, flexGrow = 1 }, text = "ID", userData = idPanel };
         ToolbarToggle propertyTab = new() {name="properties", style = { left = new StyleLength(StyleKeyword.Auto), flexShrink = 1 , flexGrow=1}, text="Properties", userData = propertyPanel};
         ToolbarToggle recipeTab = new() {name="recipes", style = { left = new StyleLength(StyleKeyword.Auto), flexShrink = 1, flexGrow=1 }, text="Recipes", userData = recipePanel};
 
-        propertyTab.value = true;
+        idTab.value = true;
+
+        idTab.RegisterCallback<ClickEvent>(EnforceCurrentTab);
+        idTab.RegisterValueChangedCallback(SetLinkedPanel);
 
         propertyTab.RegisterCallback<ClickEvent>(EnforceCurrentTab);
         propertyTab.RegisterValueChangedCallback(SetLinkedPanel);
@@ -83,6 +95,7 @@ public class GrabItemPropertyDrawer : PropertyDrawer
         recipeTab.RegisterCallback<ClickEvent>(EnforceCurrentTab);
         recipeTab.RegisterValueChangedCallback(SetLinkedPanel);
 
+        tabParent.Add(idTab);
         tabParent.Add(propertyTab);
         tabParent.Add(recipeTab);
         recipePanel.Add(combinationList);

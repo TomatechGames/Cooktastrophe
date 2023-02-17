@@ -11,7 +11,7 @@ public class XRAutoHover : MaterialPropertySetterFloat
         var parentInteractable = GetComponentInParent<XRBaseInteractable>();
         if (parentInteractable)
         {
-            parentInteractable.hoverEntered.AddListener((HoverEnterEventArgs) => Value = 0.25f);
+            parentInteractable.hoverEntered.AddListener((HoverEnterEventArgs) => Value = 1f);
             parentInteractable.hoverExited.AddListener((HoverExitEventArgs) => Value = 0f);
         }
     }
