@@ -863,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a3c9e1f99cadd4bac55dbaa50ad447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPancake: 1
+  isPancake: 0
 --- !u!114 &350981957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,7 +1010,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361445686}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017c5e3933235514c9520e1dace2a4b2, type: 3}
   m_Name: 
@@ -1527,7 +1527,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2291,7 +2291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a3c9e1f99cadd4bac55dbaa50ad447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPancake: 1
+  isPancake: 0
 --- !u!1 &766358476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,11 +2416,11 @@ GameObject:
   - component: {fileID: 829031354}
   m_Layer: 3
   m_Name: Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &829031353
 Transform:
   m_ObjectHideFlags: 0
@@ -2540,7 +2540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &840936019
 Transform:
   m_ObjectHideFlags: 0
@@ -3611,7 +3611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a3c9e1f99cadd4bac55dbaa50ad447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPancake: 0
+  isPancake: 1
 --- !u!114 &1083264761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7199,7 +7199,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1489464832}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 499179ad3cabb9643bae6fa81824a2c3, type: 3}
   m_Name: 
@@ -7491,7 +7491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1584078277
 Transform:
   m_ObjectHideFlags: 0
@@ -8593,7 +8593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a3c9e1f99cadd4bac55dbaa50ad447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPancake: 0
+  isPancake: 1
 --- !u!114 &1983492551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8721,7 +8721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1985998484
 Transform:
   m_ObjectHideFlags: 0
