@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ExtendedSocketInteractor : XRSocketInteractor
+public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteractor
 {
     List<IXRSelectInteractable> ancestorInteractables;
     IXRSelectInteractable parentInteractable;
@@ -200,5 +200,3 @@ public class ExtendedSocketInteractor : XRSocketInteractor
             .Count() > 0;
     }
 }
-
-public interface IPlayerInteractor { }

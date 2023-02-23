@@ -57,57 +57,27 @@ public class PancakeCombinationManager : MonoBehaviour
     {
         if (fromHand.interactablesSelected.Count != 1 || toHand.interactablesSelected.Count != 1)
             return;
-        if (TryUseRecipe(fromHand, toHand))
-            return;
 
         var movingItem = fromHand.firstInteractableSelected;
-        var destinationItemBehavior = toHand.firstInteractableSelected as MonoBehaviour;
-        //Debug.Log(string.Join(", ",potentialSockets));
+        var destinationItem = toHand.firstInteractableSelected;
+        var destinationItemBehavior = destinationItem as MonoBehaviour;
 
-        var selectedSocket = GetSocketEndpoints(destinationItemBehavior).FirstOrDefault();
+        var selectedSocket = GrabItemUtils.GetSocketEndpoints(destinationItemBehavior, true).FirstOrDefault();
+        bool hasCombiners = GrabItemComponent.TryRemap(destinationItem, out var destGrabComponent);
         if (selectedSocket)
+            hasCombiners= GrabItemComponent.TryRemap(selectedSocket.firstInteractableSelected, out destGrabComponent);
+        hasCombiners &= GrabItemComponent.TryRemap(movingItem, out var sourceGrabComponent);
+        if (hasCombiners && GrabItemUtils.TryCombine(sourceGrabComponent, destGrabComponent))
+            return;
+
+        var emptySocket = GrabItemUtils.GetSocketEndpoints(destinationItemBehavior).FirstOrDefault();
+        if (emptySocket)
         {
             var prevInteractor = (movingItem.firstInteractorSelecting as XRBaseInteractor);
             if(prevInteractor.isPerformingManualInteraction)
                 prevInteractor.EndManualInteraction();
             selectedSocket.StartManualInteraction(movingItem);
         }
-    }
-
-    //TODO: move to relevant class
-    private bool TryUseRecipe(XRBaseControllerInteractor fromHand, XRBaseControllerInteractor toHand)
-    {
-        var itemA = fromHand.firstInteractableSelected as MonoBehaviour;
-
-        if (!itemA)
-            return false;
-        var validatedA = itemA.TryGetComponent<GrabItemComponent>(out var sourceGrabItem);
-        if(!validatedA)
-            return false;
-
-        var itemB = toHand.firstInteractableSelected as MonoBehaviour;
-
-        var selectedSocket = GetSocketEndpoints(itemB, true).FirstOrDefault();
-        if (selectedSocket)
-            itemB = selectedSocket.firstInteractableSelected as MonoBehaviour;
-
-        if(!itemB)
-            return false;
-        var validatedB = itemA.TryGetComponent<GrabItemComponent>(out var destGrabItem);
-        if (!validatedB)
-            return false;
-
-        var recipe = GrabItemDatabaseHolder.Database.GetCombinationEntry(sourceGrabItem.GrabItem.Id, destGrabItem.GrabItem.Id );
-        if (recipe == null) 
-            recipe = GrabItemDatabaseHolder.Database.GetCombinationEntry(destGrabItem.GrabItem.Id, sourceGrabItem.GrabItem.Id);
-
-        if (recipe == null)
-            return false;
-
-        destGrabItem.SetNewItemID(recipe.Result);
-        Destroy(itemA.gameObject);
-
-        return true;
     }
 
     private void Process(InputAction.CallbackContext obj)
@@ -145,7 +115,7 @@ public class PancakeCombinationManager : MonoBehaviour
     private void Split(XRBaseControllerInteractor fromHand, XRBaseControllerInteractor toHand)
     {
         var sourceItemBehavior = fromHand.firstInteractableSelected as MonoBehaviour;
-        var potentialEndpoints = GetSelectableEndpoints(sourceItemBehavior);
+        var potentialEndpoints = GrabItemUtils.GetSelectableEndpoints(sourceItemBehavior);
 
         var selectedEndpoints = potentialEndpoints.FirstOrDefault();
         if (selectedEndpoints as MonoBehaviour)
@@ -157,44 +127,4 @@ public class PancakeCombinationManager : MonoBehaviour
         }
     }
 
-    static List<XRSocketInteractor> GetSocketEndpoints(MonoBehaviour root, bool withChild=false)
-    {
-        List<XRSocketInteractor> result = new();
-        GetSocketEndpoints(root, ref result, withChild);
-        return result;
-    }
-    static void GetSocketEndpoints(MonoBehaviour current, ref List<XRSocketInteractor> totalEndpoints, bool withChild)
-    {
-        var currentSockets = current.GetComponentsInChildren<XRSocketInteractor>().ToList();
-        foreach (var item in currentSockets)
-        {
-            if (withChild == (item.interactablesSelected.Count != 0))
-                totalEndpoints.Add(item);
-            if(item.interactablesSelected.Count != 0)
-                GetSocketEndpoints(item.firstInteractableSelected as MonoBehaviour, ref totalEndpoints, withChild);
-        }
-    }
-
-    static List<IXRSelectInteractable> GetSelectableEndpoints(MonoBehaviour root)
-    {
-        List<IXRSelectInteractable> result = new();
-        GetSelectableEndpoints(root, ref result);
-        result.Remove(root as IXRSelectInteractable);
-        return result;
-    }
-    static void GetSelectableEndpoints(MonoBehaviour current, ref List<IXRSelectInteractable> totalEndpoints)
-    {
-        var currentSockets = current.GetComponentsInChildren<XRSocketInteractor>();
-        bool isEndpoint = true;
-        foreach (var item in currentSockets)
-        {
-            if (item.interactablesSelected.Count != 0)
-            {
-                GetSelectableEndpoints(item.firstInteractableSelected as MonoBehaviour, ref totalEndpoints);
-                isEndpoint = false;
-            }
-        }
-        if (isEndpoint)
-            totalEndpoints.Add(current as IXRSelectInteractable);
-    }
 }

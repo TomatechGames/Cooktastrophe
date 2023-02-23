@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 [CreateAssetMenu(menuName = "Tomatech/GrabItem Database")]
 public class GrabItemDatabase : ScriptableObject
@@ -220,5 +221,69 @@ public class ProcessRecipe
     public bool InvolvesItem(int itemID)
     {
         return Ingredient == itemID  || Result == itemID;
+    }
+}
+
+public static class GrabItemUtils
+{
+    public static CombinationRecipe TryGetCombination(int itemA, int itemB)
+    {
+        var recipe = GrabItemDatabaseHolder.Database.GetCombinationEntry(itemA, itemB);
+        recipe ??= GrabItemDatabaseHolder.Database.GetCombinationEntry(itemB, itemA);
+        return recipe;
+    }
+
+    public static bool TryCombine(GrabItemComponent sourceGrabItem, GrabItemComponent destGrabItem)
+    {
+        var recipe = TryGetCombination(sourceGrabItem.GrabItem.Id, destGrabItem.GrabItem.Id);
+
+        if (recipe == null)
+            return false;
+
+        destGrabItem.SetNewItemID(recipe.Result);
+        Object.Destroy(sourceGrabItem.gameObject);
+
+        return true;
+    }
+
+    public static List<XRSocketInteractor> GetSocketEndpoints(MonoBehaviour root, bool withChild = false)
+    {
+        List<XRSocketInteractor> result = new();
+        GetSocketEndpoints(root, ref result, withChild);
+        return result;
+    }
+    static void GetSocketEndpoints(MonoBehaviour current, ref List<XRSocketInteractor> totalEndpoints, bool withChild)
+    {
+        var currentSockets = current.GetComponentsInChildren<XRSocketInteractor>().ToList();
+        foreach (var item in currentSockets)
+        {
+            if (withChild == (item.interactablesSelected.Count != 0))
+                totalEndpoints.Add(item);
+            if (item.interactablesSelected.Count != 0)
+                GetSocketEndpoints(item.firstInteractableSelected as MonoBehaviour, ref totalEndpoints, withChild);
+        }
+    }
+
+    public static List<IXRSelectInteractable> GetSelectableEndpoints(MonoBehaviour root)
+    {
+        List<IXRSelectInteractable> result = new();
+        GetSelectableEndpoints(root, ref result);
+        result.Remove(root as IXRSelectInteractable);
+        return result;
+    }
+    static void GetSelectableEndpoints(MonoBehaviour current, ref List<IXRSelectInteractable> totalEndpoints)
+    {
+        var currentSockets = current.GetComponentsInChildren<XRSocketInteractor>();
+        bool isEndpoint = true;
+        foreach (var item in currentSockets)
+        {
+            if (item.interactablesSelected.Count != 0)
+            {
+                GetSelectableEndpoints(item.firstInteractableSelected as MonoBehaviour, ref totalEndpoints);
+                isEndpoint = false;
+            }
+        }
+        if (isEndpoint)
+            totalEndpoints.Add(current as IXRSelectInteractable);
     }
 }

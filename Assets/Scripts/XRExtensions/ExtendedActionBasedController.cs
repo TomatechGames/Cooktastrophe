@@ -29,7 +29,6 @@ public class ExtendedActionBasedController : ActionBasedController
 
         if (interactor.hasSelection)
         {
-            //Debug.Log("hasSelection");
             shouldBeSelected = !(
                 selectPressed && 
                 !selectBuffer && 
@@ -39,14 +38,12 @@ public class ExtendedActionBasedController : ActionBasedController
 
             if(selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
             {
-                //Debug.Log("Welp");
                 var hits = Physics.RaycastAll(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, 5);
                 var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.interactablesSelected.Count == 0);
 
                 if (hitSocket.collider)
                 {
                     var socket = hitSocket.collider.GetComponent<XRSocketInteractor>();
-                    //Debug.Log("socket Found");
                     var target = interactor.firstInteractableSelected;
                     if(interactor.isPerformingManualInteraction)
                         interactor.EndManualInteraction();

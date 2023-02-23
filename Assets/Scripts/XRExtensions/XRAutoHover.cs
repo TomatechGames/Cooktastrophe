@@ -11,8 +11,16 @@ public class XRAutoHover : MaterialPropertySetterFloat
         var parentInteractable = GetComponentInParent<XRBaseInteractable>();
         if (parentInteractable)
         {
-            parentInteractable.hoverEntered.AddListener((HoverEnterEventArgs) => Value = 1f);
-            parentInteractable.hoverExited.AddListener((HoverExitEventArgs) => Value = 0f);
+            parentInteractable.hoverEntered.AddListener((enter) => UpdateHover(enter.interactableObject));
+            parentInteractable.hoverExited.AddListener((exit) => UpdateHover(exit.interactableObject));
         }
+    }
+
+    public void UpdateHover(IXRHoverInteractable interactable)
+    {
+        if (interactable.interactorsHovering.Exists(i => i is IPlayerInteractor && !(i is IXRSelectInteractor selector && interactable is IXRSelectInteractable selected && selector.interactablesSelected.Contains(selected))))
+            Value = 1;
+        else
+            Value = 0;
     }
 }

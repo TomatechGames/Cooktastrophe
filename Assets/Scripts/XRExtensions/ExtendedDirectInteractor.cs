@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor
+public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor, ICombinableInteractor
 {
     public override bool CanHover(IXRHoverInteractable interactable)
     {
@@ -70,4 +70,10 @@ public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor
 
         return true;
     }
+}
+
+public interface IPlayerInteractor { }
+public interface ICombinableInteractor 
+{
+
 }
