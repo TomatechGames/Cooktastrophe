@@ -43,9 +43,13 @@ public class CombinationSocketInteractor : XRSocketInteractor
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         // combine current item into interactor item after a delay (0.1s)
-        GrabItemComponent.TryRemap(connectedInteractor.firstInteractableSelected, out var destGrabComponent);
-        GrabItemComponent.TryRemap(args.interactableObject, out var sourceGrabComponent);
-        StartCoroutine(DelayedInvoke(0.1f, ()=> GrabItemUtils.TryCombine(sourceGrabComponent, destGrabComponent)));
+        bool hasCombiners = GrabItemComponent.TryRemap(connectedInteractor.firstInteractableSelected, out var destGrabComponent);
+        hasCombiners &= GrabItemComponent.TryRemap(args.interactableObject, out var sourceGrabComponent);
+        if (hasCombiners)
+            StartCoroutine(DelayedInvoke(0.1f, () => {
+                if(sourceGrabComponent && destGrabComponent)
+                GrabItemUtils.TryCombine(sourceGrabComponent, destGrabComponent);
+                }));
     }
 
     IEnumerator DelayedInvoke(float waitTime, System.Action run)

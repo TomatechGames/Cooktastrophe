@@ -17,19 +17,19 @@ MonoBehaviour:
     mesh: {fileID: -2432090755550338912, guid: c4c7b7de5687c5340b78c52a5513a821, type: 3}
     materials: []
     defaultTexture: {fileID: 0}
-    hitbox: {x: 1, y: 0.5, z: 1}
+    hitbox: {x: 0.35, y: 0.25, z: 0.35}
     id: -7444
   - name: food test 2
     mesh: {fileID: -2432090755550338912, guid: 4382ad62b00d9c54a9191cc03301c330, type: 3}
     materials: []
     defaultTexture: {fileID: 0}
-    hitbox: {x: 0.5, y: 0.5, z: 0.5}
+    hitbox: {x: 0.25, y: 0.25, z: 0.25}
     id: 26158
   - name: result test
     mesh: {fileID: -2432090755550338912, guid: 47654cf90c4a01d4181680fe13649085, type: 3}
     materials: []
     defaultTexture: {fileID: 0}
-    hitbox: {x: 0.5, y: 0.5, z: 0.5}
+    hitbox: {x: 0.15, y: 0.4, z: 0.15}
     id: -16107
   m_CombinationRecipes:
   - ingredientA: -7444
