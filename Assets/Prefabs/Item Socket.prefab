@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 7640747094307758101}
   - component: {fileID: 7640747094307758100}
   m_Layer: 0
-  m_Name: Static Socket
+  m_Name: Item Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
