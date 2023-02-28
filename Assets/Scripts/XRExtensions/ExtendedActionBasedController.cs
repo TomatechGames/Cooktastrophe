@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -38,15 +39,18 @@ public class ExtendedActionBasedController : ActionBasedController
 
             if(selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
             {
-                var hits = Physics.RaycastAll(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, 5);
-                var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.interactablesSelected.Count == 0);
+                var hits = Physics.RaycastAll(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, rayInteractor.endPointDistance);
+                var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.socketActive && socket.interactablesSelected.Count == 0 && (socket.interactionLayers.value & interactor.firstInteractableSelected.interactionLayers.value)!=0 && socket.CanHover(interactor.firstInteractableSelected as IXRHoverInteractable));
 
+                //Debug.Log(hits.FirstOrDefault(), hits.FirstOrDefault().collider.gameObject);
                 if (hitSocket.collider)
                 {
                     var socket = hitSocket.collider.GetComponent<XRSocketInteractor>();
                     var target = interactor.firstInteractableSelected;
                     if(interactor.isPerformingManualInteraction)
                         interactor.EndManualInteraction();
+                    //Debug.Log(socket, socket.gameObject);
+                    //Debug.Log(target, (target as MonoBehaviour).gameObject);
                     socket.StartManualInteraction(target);
                     shouldBeSelected = false;
                 }

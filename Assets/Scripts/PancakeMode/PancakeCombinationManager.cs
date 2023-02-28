@@ -76,7 +76,7 @@ public class PancakeCombinationManager : MonoBehaviour
             var prevInteractor = (movingItem.firstInteractorSelecting as XRBaseInteractor);
             if(prevInteractor.isPerformingManualInteraction)
                 prevInteractor.EndManualInteraction();
-            selectedSocket.StartManualInteraction(movingItem);
+            emptySocket.StartManualInteraction(movingItem);
         }
     }
 
