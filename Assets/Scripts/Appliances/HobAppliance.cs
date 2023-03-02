@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+
+public class HobAppliance : MonoBehaviour
+{
+    XRSocketInteractor itemSocket;
+    float processTime;
+    public float totalProcessTime;
+    public ProcessType processType;
+    // Start is called before the first frame update
+    void Start()
+    {
+        itemSocket = GetComponentInChildren<XRSocketInteractor>();
+        itemSocket.selectEntered.AddListener(e => StartProcess(e.interactableObject));
+        itemSocket.selectExited.AddListener(e => StopProcess());
+    }
+
+    public void StartProcess(IXRSelectInteractable interactable)
+    {
+        if((interactable as MonoBehaviour).TryGetComponent<GrabItemComponent>(out var grabItem))
+        {
+            var recipe = GrabItemDatabaseHolder.Database.GetProcessEntry(grabItem.GrabItem.Id, processType);
+            if (recipe == null)
+                return;
+            processTime = totalProcessTime;
+        }
+        
+    }
+    
+    public void StopProcess()
+    {
+        processTime = -1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (processTime > 0)
+        {
+            processTime = processTime - Time.deltaTime;
+            if(processTime < 0)
+            {
+                if ((itemSocket.firstInteractableSelected as MonoBehaviour).TryGetComponent<GrabItemComponent>(out var grabItem))
+                {
+                    var recipe = GrabItemDatabaseHolder.Database.GetProcessEntry(grabItem.GrabItem.Id, processType);
+                    if (recipe == null)
+                        return;
+                    grabItem.SetNewItemID(recipe.Result);
+                    StartProcess(itemSocket.firstInteractableSelected);
+                }
+
+            }
+        }
+        
+        
+    }
+}
