@@ -8,11 +8,11 @@ public class FridgeAplliance : MonoBehaviour
     XRSocketInteractor fridgeSocket;
     public GameObject grabItemPreFab;
     public GrabItemReference itemReference;
+
     // Start is called before the first frame update
     void Start()
     {
-        fridgeSocket = GetComponent<XRSocketInteractor>();
-        
+        fridgeSocket = GetComponentInChildren<XRSocketInteractor>();
     }
 
     // Update is called once per frame
@@ -24,9 +24,6 @@ public class FridgeAplliance : MonoBehaviour
             var grabItemComponent = createdItem.GetComponent<GrabItemComponent>();
             grabItemComponent.SetNewItemID(itemReference.Id);
             fridgeSocket.StartManualInteraction(createdItem.GetComponent<IXRSelectInteractable>());
-          
-            
         }
-        
     }
 }
