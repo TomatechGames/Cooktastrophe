@@ -56,7 +56,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
 
     bool allowNewSelections = false;
 
-    void DeactivateSlot(SelectExitEventArgs args = null)
+    public void DeactivateSlot(SelectExitEventArgs args = null)
     {
         allowNewSelections = false;
         if (hasSelection && (firstInteractableSelected as MonoBehaviour).TryGetComponent<ExtendedSocketInteractor>(out var childSocket))
@@ -66,7 +66,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
         }
         UpdateAncestorList();
     }
-    void ActivateSlot(SelectEnterEventArgs args = null)
+    public void ActivateSlot(SelectEnterEventArgs args = null)
     {
         allowNewSelections = true;
         if (hasSelection && (firstInteractableSelected as MonoBehaviour).TryGetComponent<ExtendedSocketInteractor>(out var childSocket))
