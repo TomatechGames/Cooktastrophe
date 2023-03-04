@@ -8,6 +8,7 @@ public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor, I
 {
     public override bool CanHover(IXRHoverInteractable interactable)
     {
+        Debug.Log("help");
         if (interactable is IXRSelectInteractable selectable && !ValidateSelectable(selectable, this))
         {
             return false;

@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class HobAppliance : MonoBehaviour
 {
     XRSocketInteractor itemSocket;
-    float processTime;
+    public float processTime;
     public float totalProcessTime;
     public ProcessType processType;
     // Start is called before the first frame update
