@@ -13,12 +13,16 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
     public bool HasParent => (parentInteractable as MonoBehaviour);
     public GameObject ParentGameObject => (parentInteractable as MonoBehaviour).gameObject;
 
+    [SerializeField]
+    bool tryAttachToSelectable = true;
+
     public IXRSelectInteractable RootInteractable => ancestorInteractables.FirstOrDefault();
 
     protected override void Awake()
     {
         base.Awake();
-        parentInteractable = GetComponentInParent<IXRSelectInteractable>();
+        if (tryAttachToSelectable)
+            parentInteractable = GetComponentInParent<IXRSelectInteractable>();
         UpdateAncestorList();
     }
 

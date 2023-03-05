@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 7547354494256641917, guid: d119df7dd7759ab43a1127e7a4ca12c6,
         type: 3}
       propertyPath: m_Name
-      value: CounterAppliance
+      value: Counter Appliance
       objectReference: {fileID: 0}
     - target: {fileID: 7547354494256641919, guid: d119df7dd7759ab43a1127e7a4ca12c6,
         type: 3}
@@ -111,6 +111,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1832850620289702012}
     m_Modifications:
+    - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
+        type: 3}
+      propertyPath: tryAttachToSelectable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7640747094307758102, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_RootOrder
