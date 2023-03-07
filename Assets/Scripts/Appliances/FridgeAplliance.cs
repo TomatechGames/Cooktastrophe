@@ -6,13 +6,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class FridgeAplliance : MonoBehaviour
 {
     XRSocketInteractor fridgeSocket;
-    public GameObject grabItemPreFab;
+    public GameObject grabItemPrefab;
     public GrabItemReference itemReference;
+
     // Start is called before the first frame update
     void Start()
     {
-        fridgeSocket = GetComponent<XRSocketInteractor>();
-        
+        fridgeSocket = GetComponentInChildren<XRSocketInteractor>();
     }
 
     // Update is called once per frame
@@ -20,13 +20,13 @@ public class FridgeAplliance : MonoBehaviour
     {
         if (!fridgeSocket.hasSelection)
         {
-            var createdItem = Instantiate(grabItemPreFab);
+            var createdItem = Instantiate(grabItemPrefab);
+            createdItem.transform.position = transform.position;
+            fridgeSocket.StartManualInteraction(createdItem.GetComponent<IXRSelectInteractable>());
+            if (itemReference.Id == 0)
+                return;
             var grabItemComponent = createdItem.GetComponent<GrabItemComponent>();
             grabItemComponent.SetNewItemID(itemReference.Id);
-            fridgeSocket.StartManualInteraction(createdItem.GetComponent<IXRSelectInteractable>());
-          
-            
         }
-        
     }
 }

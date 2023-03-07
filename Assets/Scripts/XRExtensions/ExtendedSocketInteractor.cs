@@ -13,12 +13,16 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
     public bool HasParent => (parentInteractable as MonoBehaviour);
     public GameObject ParentGameObject => (parentInteractable as MonoBehaviour).gameObject;
 
+    [SerializeField]
+    bool tryAttachToSelectable = true;
+
     public IXRSelectInteractable RootInteractable => ancestorInteractables.FirstOrDefault();
 
     protected override void Awake()
     {
         base.Awake();
-        parentInteractable = GetComponentInParent<IXRSelectInteractable>();
+        if (tryAttachToSelectable)
+            parentInteractable = GetComponentInParent<IXRSelectInteractable>();
         UpdateAncestorList();
     }
 
@@ -56,7 +60,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
 
     bool allowNewSelections = false;
 
-    void DeactivateSlot(SelectExitEventArgs args = null)
+    public void DeactivateSlot(SelectExitEventArgs args = null)
     {
         allowNewSelections = false;
         if (hasSelection && (firstInteractableSelected as MonoBehaviour).TryGetComponent<ExtendedSocketInteractor>(out var childSocket))
@@ -66,7 +70,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
         }
         UpdateAncestorList();
     }
-    void ActivateSlot(SelectEnterEventArgs args = null)
+    public void ActivateSlot(SelectEnterEventArgs args = null)
     {
         allowNewSelections = true;
         if (hasSelection && (firstInteractableSelected as MonoBehaviour).TryGetComponent<ExtendedSocketInteractor>(out var childSocket))

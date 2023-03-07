@@ -39,12 +39,13 @@ public class GrabItemDatabase : ScriptableObject
         if (m_ItemEntries.Count == 0)
             return false;
 
-        m_ItemEntries
+        var dupes = m_ItemEntries
             .Where(i=>i.Id==0 || m_ItemEntries.Where(j=>i.Id==j.Id).Count()>1)
-            .ToList()
-            .ForEach(i=>i.RegenerateID(m_ItemEntries
-                .Where(j=>j.Id!=i.Id)
-                .Select(i=>i.Id)
+            .ToList();
+        dupes.Reverse();
+        dupes.ForEach(i => i.RegenerateID(m_ItemEntries
+                .Where(j => j != i)
+                .Select(i => i.Id)
                 .ToList()
             ));
         m_ItemDictionary = m_ItemEntries.ToDictionary(e=>e.Id);
@@ -163,7 +164,8 @@ public class GrabItemEntry
     public int Id => id;
     public void RegenerateID(List<int> existingIDs)
     {
-        while (existingIDs.Contains(id) || id==0)
+        Debug.Log(string.Join(", ", existingIDs));
+        while (existingIDs.Contains(id) || id == 0)
         {
             id = Random.Range(short.MinValue, short.MaxValue);
         }

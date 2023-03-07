@@ -30,6 +30,6 @@ public class ApplianceSocketBlocker : MonoBehaviour
     private void UpdateTriggers()
     {
         if (socketInteractor && !socketInteractor.hasSelection)
-            socketInteractor.socketActive =!currentCollisions.Exists(x => playerLayer.Contains(x.gameObject.layer));
+            socketInteractor.socketActive =!currentCollisions.Exists(x => x!=null && playerLayer.Contains(x.gameObject.layer));
     }
 }
