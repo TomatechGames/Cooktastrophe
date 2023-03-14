@@ -10331,6 +10331,7 @@ GameObject:
   - component: {fileID: 1187828837}
   - component: {fileID: 1187828839}
   - component: {fileID: 1187828838}
+  - component: {fileID: 1187828840}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -10394,6 +10395,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1187828840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187828836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a3c395536ab9348b29e076c2ab747e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  socket: {fileID: 803844666}
 --- !u!1 &1197155573
 GameObject:
   m_ObjectHideFlags: 0
@@ -14217,7 +14231,6 @@ MonoBehaviour:
   foodIconC: {fileID: 702761465}
   takeOrderButton: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  plateSocket: {fileID: 0}
 --- !u!1 &1757488151
 GameObject:
   m_ObjectHideFlags: 0

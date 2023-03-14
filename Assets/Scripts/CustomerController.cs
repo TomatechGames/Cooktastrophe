@@ -82,4 +82,10 @@ public class CustomerController : MonoBehaviour
             yield return null;
         }
     }
+
+    public void ReserveSeat()
+    {
+        print("Seat has been reserved! You're in, bitch!");
+    }
+
 }
