@@ -107,13 +107,12 @@ public class GrabItemReference
     {
         get
         {
-            hasEntry = false;
             return id;
         }
         set
         {
+            hasEntry = false;
             id = value;
-
         }
     }
     bool hasEntry;

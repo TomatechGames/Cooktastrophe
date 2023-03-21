@@ -7,85 +7,70 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class CustomerController : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public XRSocketInteractor tableSocket;
-    public Transform chairTransform;
-    public Transform outsideTarget;
-    public PopupController popupController;
-    public Animator modelAnimator;
-    public GameObject unknownOrderIcon;
-    public GameObject foodIconA;
-    public GameObject foodIconB;
-    public GameObject foodIconC;
-    public InputActionReference takeOrderButton;
+    [SerializeField]
+    NavMeshAgent agent;
+    public NavMeshAgent Agent => agent;
 
-    public bool DishDelivered { get; set; }
+    [SerializeField]
+    PopupController popupController;
+    [SerializeField]
+    Animator modelAnimator;
+    [SerializeField]
+    MeshFilter meshFilter;
+    [SerializeField]
+    MeshRenderer meshRenderer;
 
-    private IEnumerator Start()
+    GrabItemReference grabItem;
+    public GrabItemEntry grabItemEntry => grabItem.Entry;
+    public bool RecievedFood { get; private set; }
+
+    public Transform PersistentTarget { get; set; }
+
+    private void Update()
     {
-        yield return new WaitUntil(() => takeOrderButton.action.IsPressed());
-        agent.destination = chairTransform.position;
-        modelAnimator.SetTrigger("Walk");
-        yield return new WaitUntil(() =>(transform.position - chairTransform.position).magnitude<0.5f);
-        agent.enabled = false;
-        transform.position = chairTransform.position;
-        transform.rotation = Quaternion.Euler(chairTransform.rotation.eulerAngles+new Vector3(0,180,0));
-        modelAnimator.SetTrigger("Sit");
+        if (PersistentTarget)
+            Agent.destination = PersistentTarget.position;
+    }
+
+    public void TriggerAnimation(string triggerID)
+    {
+        modelAnimator.SetTrigger(triggerID);
+    }
+
+    Coroutine timerCoroutine;
+
+    public void PickFood()
+    {
+        grabItem.Id = GameStateManager.Instance.GetRandomFood();
+        ApplyItem();
         popupController.SetActive(true);
-        takeOrderButton.action.Enable();
-        unknownOrderIcon.SetActive(true);
-        var foodRoutine = StartCoroutine(FoodProcess());
-        yield return new WaitUntil(() => takeOrderButton.action.IsPressed());
-        unknownOrderIcon.SetActive(false);
-        switch (Random.Range(0, 2))
-        {
-            case 0:
-                foodIconA.SetActive(true);
-                break;
-            case 1:
-                foodIconB.SetActive(true);
-                break;
-            case 2:
-                foodIconC.SetActive(true);
-                break;
+        timerCoroutine = StartCoroutine(CoroutineHelpers.Timer(GameStateManager.Instance.FoodPatience, popupController.SetPercent, GameStateManager.Instance.GameOver));
+    }
 
-        }
-        yield return new WaitUntil(() => DishDelivered);
-        StopCoroutine(foodRoutine);
-        modelAnimator.SetTrigger("Eat");
-        foodIconA.SetActive(false);
-        foodIconB.SetActive(false);
-        foodIconC.SetActive(false);
-        float elapsed = 0;
-        while (elapsed<10)
-        {
-            elapsed += Time.deltaTime;
-            popupController.SetPercent(elapsed/10);
-            yield return null;
-        }
+    public void DeliverFood()
+    {
+        RecievedFood = true;
         popupController.SetActive(false);
-        Destroy(((tableSocket.firstInteractableSelected as MonoBehaviour).GetComponentInChildren<XRSocketInteractor>().firstInteractableSelected as MonoBehaviour).gameObject);
-        Destroy((tableSocket.firstInteractableSelected as MonoBehaviour).gameObject);
-        agent.enabled = true;
-        agent.destination = outsideTarget.position;
-        modelAnimator.SetTrigger("Walk");
-        StartCoroutine(Start());
+        StopCoroutine(timerCoroutine);
     }
 
-    IEnumerator FoodProcess()
+    public void ApplyItem()
     {
-        float elapsed = 0;
-        while (elapsed < 90)
+        if (grabItem.Entry == null)
         {
-            elapsed += Time.deltaTime;
-            popupController.SetPercent(elapsed / 90);
-            yield return null;
+            meshFilter.mesh = null;
+            return;
         }
+        meshFilter.mesh = grabItem.Entry.Mesh;
+        if (grabItem.Entry.Materials.Count > 0)
+        {
+            meshRenderer.SetMaterials(grabItem.Entry.Materials);
+        }
+        meshRenderer.material.mainTexture = grabItem.Entry.DefaultTexture;
     }
 
-    public void ReserveSeat()
+    public void ResetState()
     {
-        print("Seat has been reserved! You're in, bitch!");
+        RecievedFood=false;
     }
-
 }
