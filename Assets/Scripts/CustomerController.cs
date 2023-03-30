@@ -20,7 +20,7 @@ public class CustomerController : MonoBehaviour
     [SerializeField]
     MeshRenderer meshRenderer;
 
-    GrabItemReference grabItem;
+    GrabItemReference grabItem = new();
     public GrabItemEntry grabItemEntry => grabItem.Entry;
     public bool RecievedFood { get; private set; }
 
@@ -47,11 +47,22 @@ public class CustomerController : MonoBehaviour
         timerCoroutine = StartCoroutine(CoroutineHelpers.Timer(GameStateManager.Instance.FoodPatience, popupController.SetPercent, GameStateManager.Instance.GameOver));
     }
 
+    public bool TryDeliverFood(int id)
+    {
+        if(grabItem.Id == id)
+        {
+            DeliverFood();
+            return true;
+        }
+        return false;
+    }
+
     public void DeliverFood()
     {
         RecievedFood = true;
         popupController.SetActive(false);
-        StopCoroutine(timerCoroutine);
+        if(timerCoroutine!=null)
+            StopCoroutine(timerCoroutine);
     }
 
     public void ApplyItem()

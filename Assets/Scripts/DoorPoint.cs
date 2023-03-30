@@ -22,6 +22,26 @@ public class DoorPoint : MonoBehaviour
         instance = this;//there is only one door point, and we can get it from anywhere using Instance
     }
 
+    private void OnEnable()
+    {
+        GameStateManager.Instance.OnStateChange += OnGameStateChange;
+    }
+
+    private void OnGameStateChange(GameStateManager.GameState obj)
+    {
+        if (obj == GameStateManager.GameState.Dining)
+        {
+            tables.Clear();
+            //only tables that are slotted in an appliance slot (should be all spawned tables) will be linked
+            tables.AddRange(FindObjectsOfType<TableAppliance>().Where(t=>t.ApplianceCore.IsSlotted));
+        }
+    }
+
+    private void OnDisable()
+    {
+        GameStateManager.Instance.OnStateChange -= OnGameStateChange;
+    }
+
     private void Update()
     {
         if (groupList.Count != 0)

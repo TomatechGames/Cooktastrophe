@@ -37,20 +37,20 @@ public class ExtendedActionBasedController : ActionBasedController
                 hoverable.interactorsHovering
                     .Exists(i=>i is XRSocketInteractor socket && !socket.hasSelection));
 
-            if(selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
+            if (selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
             {
                 var hits = Physics.RaycastAll(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, rayInteractor.endPointDistance);
                 var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.socketActive && socket.interactablesSelected.Count == 0 && (socket.interactionLayers.value & interactor.firstInteractableSelected.interactionLayers.value)!=0 && socket.CanHover(interactor.firstInteractableSelected as IXRHoverInteractable));
 
-                //Debug.Log(hits.FirstOrDefault(), hits.FirstOrDefault().collider.gameObject);
+                Debug.Log(hits.FirstOrDefault().collider.gameObject, hits.FirstOrDefault().collider.gameObject);
                 if (hitSocket.collider)
                 {
                     var socket = hitSocket.collider.GetComponent<XRSocketInteractor>();
                     var target = interactor.firstInteractableSelected;
                     if(interactor.isPerformingManualInteraction)
                         interactor.EndManualInteraction();
-                    //Debug.Log(socket, socket.gameObject);
-                    //Debug.Log(target, (target as MonoBehaviour).gameObject);
+                    Debug.Log(socket, socket.gameObject);
+                    Debug.Log(target, (target as MonoBehaviour).gameObject);
                     socket.StartManualInteraction(target);
                     shouldBeSelected = false;
                 }

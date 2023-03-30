@@ -13,12 +13,18 @@ public class FridgeAplliance : MonoBehaviour
     void Start()
     {
         fridgeSocket = GetComponentInChildren<XRSocketInteractor>();
+        GameStateManager.Instance.OnStateChange += s =>
+        {
+            if (s == GameStateManager.GameState.Renovation && fridgeSocket.hasSelection)
+                Destroy(fridgeSocket.firstInteractableSelected.AsBehavior().gameObject);
+                
+        };
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!fridgeSocket.hasSelection)
+        if (!fridgeSocket.hasSelection && GameStateManager.Instance.CurrentState== GameStateManager.GameState.Dining)
         {
             var createdItem = Instantiate(grabItemPrefab);
             createdItem.transform.position = transform.position;
