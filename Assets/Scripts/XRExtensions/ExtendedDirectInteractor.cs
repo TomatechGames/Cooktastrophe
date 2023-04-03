@@ -24,23 +24,27 @@ public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor, I
         return base.CanSelect(selectable);
     }
 
+    const bool USELOGS = false;
     public static bool ValidateSelectable(IXRSelectInteractable selectable, XRBaseInteractor interactor)
     {
         if (interactor.firstInteractableSelected == selectable)
         {
-            //Debug.Log("Valid: currently being held", selectable as MonoBehaviour);
+            if(USELOGS)
+                Debug.Log("Valid: currently being held", selectable as MonoBehaviour);
             return true;
         }
 
         if (interactor.firstInteractableSelected !=null )
         {
-            //Debug.Log("Invalid: hand occcupied", selectable as MonoBehaviour);
+            if (USELOGS)
+                Debug.Log("Invalid: hand occcupied", selectable as MonoBehaviour);
             return false;
         }
 
         if (!selectable.isSelected)
         {
-            //Debug.Log("Valid: is not selected", selectable as MonoBehaviour);
+            if (USELOGS)
+                Debug.Log("Valid: is not selected", selectable as MonoBehaviour);
             return true;
         }
 
@@ -50,7 +54,8 @@ public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor, I
             playerInteractor != interactor as IPlayerInteractor
         )
         {
-            //Debug.Log("Invalid: held by another hand", selectable as MonoBehaviour);
+            if (USELOGS)
+                Debug.Log("Invalid: held by another hand", selectable as MonoBehaviour);
             return false;
         }
 
@@ -64,7 +69,8 @@ public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor, I
             ) : false
         )
         {
-            //Debug.Log("Invalid: attached to unheld socket with interactable", selectable as MonoBehaviour);
+            if (USELOGS)
+                Debug.Log("Invalid: attached to unheld socket with interactable", selectable as MonoBehaviour);
             return false;
         }
 

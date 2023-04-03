@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-03-29T23:00:24.179Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="ppui8NXQOon_LMCbqjbD" version="21.1.1" type="device">
+<mxfile host="app.diagrams.net" modified="2023-03-30T20:59:15.302Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0" etag="33CCEQQUetjLzE9-poqh" version="21.1.2" type="device">
   <diagram name="Page-1" id="MN_eYuwgUkHgro4WfV_C">
-    <mxGraphModel dx="2368" dy="684" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2508" dy="912" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -268,37 +268,37 @@
         <mxCell id="n0PkIssot2RWdr9VY8r9-46" value="beginGame()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="95" y="860" width="90" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-23" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-23" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="-805" y="130" width="490" height="490" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-24" value="Name:" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-24" value="Name:" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-805" y="150" width="110" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-25" value="GSManager" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-25" value="GameStateManager" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-500" y="150" width="180" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-26" value="Responsibilities:" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-26" value="Responsibilities:" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-790" y="210" width="95" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-27" value="-Swaps between renovation and dining modes&lt;br&gt;--Calculates the groupes of customers and spawnes them throughout the day.&lt;br&gt;-Stores game variables such as patience each group has and what foods are available for customers to order" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-27" value="-Swaps between renovation and dining modes&lt;br&gt;--Calculates the groups of customers and spawns them throughout the day.&lt;br&gt;-Stores game variables such as patience each group has and what foods are available for customers to order" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-585" y="210" width="255" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-28" value="Type" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-28" value="Type" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-790" y="380" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-29" value="System" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-29" value="System" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-440" y="380" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-30" value="Pre-production" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-30" value="Pre-production" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-790" y="430" width="100" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-32" value="Player starts the game" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-32" value="Player starts the game" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-570" y="430" width="170" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-33" value="Post-production" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-33" value="Post-production" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-790" y="460" width="90" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x2HkjPIMmRNhByCWoAMr-34" value="If a customer want food, a new order is made (Instance creation)&lt;br&gt;An order comes in, new food is created(Instance creation)&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x2HkjPIMmRNhByCWoAMr-34" value="&amp;nbsp;At intervals during day, new customer group arrives (Instance creation)&lt;br&gt;&lt;div&gt;Fridge opened, new food item spawns (Instance creation)&lt;/div&gt;&lt;div&gt;Food placed in bin, food gets destroyed (Instance destruction)&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-775" y="490" width="425" height="50" as="geometry" />
         </mxCell>
       </root>

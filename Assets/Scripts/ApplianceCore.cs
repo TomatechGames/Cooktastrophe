@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Appliance : MonoBehaviour
+public class ApplianceCore : MonoBehaviour
 {
     //shrink into blueprint when grabbed
     //prevent grab in dining mode (actually, do this in the interactor using filters)
@@ -21,6 +21,10 @@ public class Appliance : MonoBehaviour
     [SerializeField]
     Transform flattenParent;
 
+    public XRGrabInteractable Interactable => interactable;
+
+    public bool IsSlotted => interactable.isSelected;
+
     private void Start()
     {
         colliders = GetComponentsInChildren<Collider>().ToList();
@@ -28,6 +32,12 @@ public class Appliance : MonoBehaviour
         interactable = GetComponent<XRGrabInteractable>();
         interactable.selectEntered.AddListener(Flatten);
         interactable.selectExited.AddListener(Unflatten);
+        GameStateManager.Instance.OnStateChange += s => SetSolid(s==GameStateManager.GameState.Dining);
+    }
+
+    public void SetSolid(bool value)
+    {
+        interactable.interactionLayers = value ? InteractionLayerMask.GetMask() : InteractionLayerMask.GetMask("Appliance");
     }
 
     void Flatten(SelectEnterEventArgs e)
@@ -52,9 +62,9 @@ public class Appliance : MonoBehaviour
         flattenParent.DOScale(Vector3.one, 0.1f).SetEase(Ease.InQuad).onComplete = () => colliders.ForEach(c => c.enabled = true);
         flattenParent.DOLocalRotate(Vector3.zero, 0.1f).SetEase(Ease.OutQuad);
     }
+}
 
-    static Vector3 Reciprocal(Vector3 value)
-    {
-        return new Vector3(1/value.x, 1/value.y, 1/value.z);
-    }
+public interface IApplianceLogic
+{
+    public ApplianceCore ApplianceCore { get; }
 }

@@ -2,6 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+
+public static class ExtensionMethods
+{
+    public static Vector3 Reciprocal(this Vector3 value)
+    {
+        return new Vector3(1 / value.x, 1 / value.y, 1 / value.z);
+    }
+
+    public static MonoBehaviour AsBehavior(this IXRSelectInteractable interactable)
+    {
+        return interactable as MonoBehaviour;
+    }
+}
 
 public static class CoroutineHelpers
 {

@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: m_RetainTransformParent
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7547354494256641919, guid: d119df7dd7759ab43a1127e7a4ca12c6,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5549979788565116330, guid: d119df7dd7759ab43a1127e7a4ca12c6, type: 3}
     m_RemovedGameObjects: []
