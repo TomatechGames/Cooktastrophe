@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4319397399304834133}
   - component: {fileID: 4319397399304834132}
   - component: {fileID: 4319397399304834135}
+  - component: {fileID: 1132514133460112460}
   m_Layer: 6
   m_Name: Plate
   m_TagString: Untagged
@@ -82,7 +83,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 2
+    m_Bits: 18
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_CustomReticle: {fileID: 0}
@@ -162,7 +163,7 @@ MonoBehaviour:
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -184,6 +185,18 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 0
   m_AttachPointCompatibilityMode: 0
+--- !u!114 &1132514133460112460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4319397399304834134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00391822067b1844b917e63d6322ce29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4319397399848026522
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4319397399848026522}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.025000006, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -385,6 +398,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: e4c5469a1052f0945a71e31c11626732,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 644d4a4a0bf4fc94c8d153af9d030f72,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: e4c5469a1052f0945a71e31c11626732,
         type: 3}
       propertyPath: m_Name
@@ -412,6 +431,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4319397400203652151}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: e4c5469a1052f0945a71e31c11626732,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7057148970621280956}
   m_SourcePrefab: {fileID: 100100000, guid: e4c5469a1052f0945a71e31c11626732, type: 3}
 --- !u!1 &3976956497202467178 stripped
 GameObject:
@@ -465,3 +488,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <PropertyName>k__BackingField: 
+--- !u!114 &7057148970621280956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385521465863711155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1de88ca51708542bc23fea2cde56eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newTex: {fileID: 2800000, guid: 3efccf89968ecd643bcb41ad0710a527, type: 3}

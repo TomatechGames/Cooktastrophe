@@ -559,7 +559,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
@@ -730,7 +730,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
@@ -901,7 +901,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
@@ -1749,6 +1749,9 @@ MonoBehaviour:
   - {fileID: 22614054}
   - {fileID: 1420060147}
   popupController: {fileID: 2666850046153491789}
+  dirtyPlatePrefab: {fileID: 4319397399304834135, guid: 01aa32864fff1fd46b9709e1d090b614,
+    type: 3}
+  debugInteractor: {fileID: 0}
 --- !u!208 &2297782938146585330
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -1788,7 +1791,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}

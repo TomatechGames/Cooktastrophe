@@ -1,0 +1,14 @@
+Things to test:
+
+Tadhg
+- pathfinding
+- functionality of hob
+Aisha
+- functionality of fridge
+- functionality of bin
+Karl
+- customers wait at door for free table
+- customers dont wait when table is available
+Jane
+- customers leave table when given correct food
+- customers dont leave table when given wrong food
