@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Claims;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using static UnityEditor.Progress;
 using CustomerGroup = GameStateManager.CustomerGroup;
 
 public class TableAppliance : MonoBehaviour, IApplianceLogic
@@ -19,9 +19,12 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
     List<Transform> chairs;
     [SerializeField]
     PopupController popupController;
-    ApplianceCore applianceCore;
+    //this is super lazy, but we're low on time
+    [SerializeField]
+    XRGrabInteractable dirtyPlatePrefab;
     [SerializeField]
     XRBaseInteractor debugInteractor;
+    ApplianceCore applianceCore;
     public ApplianceCore ApplianceCore => applianceCore ??= GetComponentInParent<ApplianceCore>();
 
     public Transform[] ActiveChairs => chairs.Where(c => c.gameObject.activeInHierarchy).ToArray();
@@ -37,7 +40,7 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
     private IEnumerator Start()
     {
         applianceCore = GetComponentInParent<ApplianceCore>();
-        primarySocket.selectEntered.AddListener(i => TryReserveCustomer());
+        primarySocket.selectEntered.AddListener(i => StartCoroutine(CoroutineHelpers.InvokeDelayed(()=>TryDeliverFood(i.interactableObject), 0.1f)));
         primarySocket.selectExited.AddListener(i => TryReserveCustomer());
         chairSockets.ForEach(c => c.selectExited.AddListener(i => TryReserveCustomer()));
         GameStateManager.Instance.OnStateChange += s => SetActive(s == GameStateManager.GameState.Dining);
@@ -51,17 +54,6 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
         */
     }
 
-    void TryDeliverFood(IXRSelectInteractable selectInteractable)
-    {
-        if (selectInteractable is MonoBehaviour interactableBehavior && interactableBehavior.TryGetComponent<GrabItemComponent>(out var grabItemInteractable))
-        {
-            for (int i = 0; i < customerGroup.GroupSize; i++)
-            {
-                
-            }
-        }
-    }
-
     private void SetActive(bool value)
     {
         if (!value && primarySocket.socketActive)
@@ -70,12 +62,55 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
                 Destroy((primarySocket.firstInteractableSelected as MonoBehaviour).gameObject);
             foreach (var chair in chairSockets)
             {
-                if(chair.hasSelection)
+                if (chair.hasSelection)
                     Destroy((chair.firstInteractableSelected as MonoBehaviour).gameObject);
             }
         }
         primarySocket.socketActive = value;
         chairSockets.ForEach(c => c.socketActive = value);
+    }
+
+    void TryDeliverFood(IXRSelectInteractable selectInteractable)
+    {
+        var childSocket = selectInteractable.AsBehavior().GetComponentInChildren<XRSocketInteractor>();
+        if (!childSocket || !childSocket.hasSelection)
+            return; //returns null if there is no plate or the plate is empty
+        if (childSocket.firstInteractableSelected.AsBehavior().TryGetComponent<GrabItemComponent>(out var grabItem))
+        {
+            var resultIndex = customerGroup.TryDeliverFood(grabItem.GrabItem.Id);
+            if (resultIndex != -1)
+            {
+                if(selectInteractable.isSelected && selectInteractable.firstInteractorSelecting is XRBaseInteractor baseInteractor && baseInteractor.isPerformingManualInteraction)
+                    baseInteractor.EndManualInteraction();
+                (selectInteractable as XRBaseInteractable).interactionLayers = InteractionLayerMask.NameToLayer("UngrabbableItem");
+                chairSockets[resultIndex].StartManualInteraction(selectInteractable);
+            }
+        }
+    }
+
+    public void ClearTable()
+    {
+        foreach (var socket in chairSockets)
+        {
+            if (!socket.hasSelection)
+                continue;
+            var behavior = socket.firstInteractableSelected.AsBehavior();
+            Vector3 oldPos = behavior.transform.position;
+            Quaternion oldRot = behavior.transform.rotation;
+            var childSocket = behavior.GetComponentInChildren<XRSocketInteractor>();
+            if(childSocket && childSocket.hasSelection)
+                Destroy(childSocket.firstInteractableSelected.AsBehavior().gameObject);
+            bool hadChildSocket = childSocket;
+            Destroy(behavior.gameObject);
+            if (hadChildSocket)
+            {
+                var spawned = Instantiate(dirtyPlatePrefab);
+                spawned.transform.position = oldPos;
+                spawned.transform.rotation = oldRot;
+                socket.StartManualInteraction(spawned as IXRSelectInteractable);
+            }
+        }
+        customerGroup = null;
     }
 
     Coroutine timerCoroutine;
@@ -113,10 +148,5 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
             return true;//table is reserved
         }
         return false;//will be false if there is no one at the door
-    }
-
-    public void FreeTable()
-    {
-        customerGroup = null;
     }
 }

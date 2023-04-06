@@ -58,6 +58,7 @@ public class DoorPoint : MonoBehaviour
     public Transform GetPersistantTarget(CustomerGroup group)
     {
         int index = groupList.IndexOf(group);
+        Debug.Log(index);
         if (index == 0)
             return transform;
         else

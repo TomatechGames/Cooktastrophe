@@ -102,7 +102,7 @@ public class GameStateManager : MonoBehaviour
 
     public void StartDay()
     {
-        currentCustomerSpawner = StartCoroutine(CustomerSpawner(4, 1, 500));
+        currentCustomerSpawner = StartCoroutine(CustomerSpawner(4, 1, 50));
         CurrentState = GameState.Dining;
     }
 
@@ -190,13 +190,16 @@ public class GameStateManager : MonoBehaviour
                 customers.Add(Instance.SpawnCustomer());
             }
 
+
             reservedTable = null;
-            DoorPoint.Instance.AddGroup(this);
+            customers.ForEach(c => c.Agent.stoppingDistance = 1);
             CurrentState = CustomerState.WaitingAtDoor;
+            DoorPoint.Instance.AddGroup(this);
             timerCoroutine = Instance.StartCoroutine(CoroutineHelpers.Timer(Instance.FoodPatience, p => DoorPatience = p, Instance.GameOver));
             customers.ForEach(c => c.TriggerAnimation("Idle"));
             Debug.Log("Door");
-            yield return new WaitUntil(()=>reservedTable);
+            yield return WaitUntilState(CustomerState.Pathfinding);
+            customers.ForEach(c => c.Agent.stoppingDistance = 0);
             Debug.Log("Found Table");
             if (timerCoroutine != null)
                 Instance.StopCoroutine(timerCoroutine);
@@ -211,15 +214,28 @@ public class GameStateManager : MonoBehaviour
             }
             else
             {
+
                 var activeChairs = reservedTable.ActiveChairs;
                 for (int i = 0; i < customers.Count; i++)
                 {
                     customers[i].Agent.destination = activeChairs[i].transform.position;
                 }
-                CurrentState = CustomerState.Pathfinding;
                 yield return WaitForPathfinding(CustomerState.WaitingForOrder);
                 Debug.Log("Seat");
-                customers.ForEach(c => c.TriggerAnimation("Sit"));
+                for (int i = 0; i < customers.Count; i++)
+                {
+                    customers[i].transform.position = customers[i].Agent.destination;
+                    customers[i].transform.rotation = Quaternion.Euler(0,i switch
+                    {
+                        0=>180,
+                        1=>0,
+                        2=>270,
+                        3=>90,
+                        _=>0
+                    },0);
+                    customers[i].TriggerAnimation("Sit");
+                    //customers[i].Agent.enabled = false;
+                }
                 reservedTable.StartWaiting();
                 yield return WaitUntilState(CustomerState.WaitingForFood);
                 Debug.Log("Ordered");
@@ -235,8 +251,9 @@ public class GameStateManager : MonoBehaviour
             yield return new WaitForSeconds(10);
             Debug.Log("Leaving");
             customers.ForEach(c => c.Agent.destination = Instance.transform.position);
-            reservedTable.FreeTable();
+            reservedTable.ClearTable();
             reservedTable = null;
+            CurrentState = CustomerState.Pathfinding;
             yield return WaitForPathfinding(CustomerState.None);
 
             customers.ForEach(c => Instance.DespawnCustomer(c));
@@ -244,6 +261,17 @@ public class GameStateManager : MonoBehaviour
             yield return null;
         }
 
+        public int TryDeliverFood(int foodID)
+        {
+            foreach (var customer in customers)
+            {
+                if (customer.TryDeliverFood(foodID))
+                {
+                    return customers.IndexOf(customer);
+                }
+            }
+            return -1;
+        }
 
         Coroutine timerCoroutine;
 
@@ -266,6 +294,8 @@ public class GameStateManager : MonoBehaviour
         {
             print("Table has been reserved! You're in, bitch!");
             Debug.Log(table);
+            CurrentState = CustomerState.Pathfinding;
+            customers.ForEach(c => c.PersistentTarget = null);
             reservedTable = table;
         }
 
@@ -279,9 +309,13 @@ public class GameStateManager : MonoBehaviour
         private IEnumerator WaitForPathfinding(CustomerState stateOnComplete)
         {
             yield return WaitUntilState(CustomerState.Pathfinding);
-            customers.ForEach(c => c.TriggerAnimation("Walk"));
+            foreach (var customer in customers)
+            {
+                customer.Agent.enabled = true;
+                customer.TriggerAnimation("Walk");
+            }
             Debug.Log("Waiting for pathfinding...");
-            yield return CoroutineHelpers.WaitUntilAll(customers, c => CurrentState != CustomerState.Pathfinding || (c.transform.position - c.Agent.destination).magnitude < 0.5f);
+            yield return CoroutineHelpers.WaitUntilAll(customers, c => CurrentState != CustomerState.Pathfinding || (c.transform.position - c.Agent.destination).magnitude < 0.25f);
             Debug.Log("Pathfinding complete");
             if (CurrentState == CustomerState.Pathfinding)
                 CurrentState = stateOnComplete;

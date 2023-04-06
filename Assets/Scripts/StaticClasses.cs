@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -15,10 +16,18 @@ public static class ExtensionMethods
     {
         return interactable as MonoBehaviour;
     }
+
+    public static Task RunAsTask(this IEnumerator toRun) => AsyncCoroutineHelper.Instance.StartCoroutineTask(toRun);
 }
 
 public static class CoroutineHelpers
 {
+    public static IEnumerator InvokeDelayed(Action toRun, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        toRun?.Invoke();
+    }
+
     public static IEnumerator WaitUntilAll<T>(IEnumerable<T> enumerator, Func<T,bool> predicate)
     {
         foreach (var item in enumerator)
