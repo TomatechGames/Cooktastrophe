@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 799535724591781647}
   - component: {fileID: 4021965047058541108}
   - component: {fileID: 4021965047058541109}
+  - component: {fileID: 42417167044849760}
   m_Layer: 6
   m_Name: BasicGrabItem
   m_TagString: Untagged
@@ -319,3 +320,15 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 0
   m_AttachPointCompatibilityMode: 0
+--- !u!114 &42417167044849760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021965047058541110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6b6ec7c21078c46b64fc5c72f5a313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

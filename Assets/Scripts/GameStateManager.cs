@@ -23,10 +23,27 @@ public class GameStateManager : MonoBehaviour
         Dining
     }
 
+    [ContextMenu("PrintGroups")]
+    void PrintGroups()
+    {
+        activeGroups.ForEach(g =>
+        {
+            g.PrintCustomers();
+        });
+    }
+
     [SerializeField]
     CustomerController customerPrefab;
     [SerializeField]
+    Transform clockHand;
+    [SerializeField]
+    GameObject startDayButton;
+    [SerializeField]
     GrabItemReference[] possibleFoods;
+    [SerializeField]
+    ApplianceCore[] possibleAppliances;
+    [SerializeField]
+    Transform applianceSpawnPos;
     [field: SerializeField]
     public float DoorPatience { get; private set; }
     [field: SerializeField]
@@ -60,11 +77,13 @@ public class GameStateManager : MonoBehaviour
         var newCustomer = customerPool.Dequeue();
         newCustomer.transform.position = transform.position;
         newCustomer.transform.rotation = transform.rotation;
+        newCustomer.gameObject.SetActive(true);
         return newCustomer;
     }
     protected void DespawnCustomer(CustomerController toDespawn)
     {
         customerPool.Enqueue(toDespawn);
+        toDespawn.gameObject.SetActive(false);
     }
     #endregion
 
@@ -80,7 +99,7 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    public int GetRandomFood() => possibleFoods[Random.Range(0, possibleFoods.Length-1)].Id;
+    public int GetRandomFood() => possibleFoods[Random.Range(0, possibleFoods.Length)].Id;
 
     private void Awake()
     {
@@ -102,7 +121,7 @@ public class GameStateManager : MonoBehaviour
 
     public void StartDay()
     {
-        currentCustomerSpawner = StartCoroutine(CustomerSpawner(4, 1, 50));
+        currentCustomerSpawner = StartCoroutine(CustomerSpawner(1, 1, 10));
         CurrentState = GameState.Dining;
     }
 
@@ -127,25 +146,35 @@ public class GameStateManager : MonoBehaviour
             groupQueue.Enqueue(groupSize);
         }
         float dayLength = Mathf.Max(groupQueue.Count*10, minnimumDayLength);
-        float timeBetweenGroups = dayLength / (groupQueue.Count - 1);
+        float timeBetweenGroups = groupQueue.Count != 1 ? dayLength / (groupQueue.Count - 1) : 0;
         Debug.Log("groupCount " + groupQueue.Count);
 
+        startDayButton.SetActive(false);
         yield return null;
-
-        //start gameplay timer
+        StartCoroutine(CoroutineHelpers.Timer(dayLength, p=> clockHand.localRotation = Quaternion.Euler(0, 0, p * 360) , null));
         while (groupQueue.Count > 0)
         {
             int groupSize = groupQueue.Dequeue();
             SpawnCustomerGroup().SetCustomerCount(groupSize).BeginLogic();
-            yield return new WaitForSeconds(timeBetweenGroups);
+            if(groupQueue.Count != 0)
+            {
+                Debug.Log("Waiting for group cooldown of: " + timeBetweenGroups);
+                yield return new WaitForSeconds(timeBetweenGroups);
+            }
         }
-
-        //wait until all active customers have despawned
+        Debug.Log("Waiting for groups to complete");
         yield return new WaitUntil(()=> activeGroups.Count==0);
-        //wait an extra bit of time
+
+        Debug.Log("Waiting a bit more");
         yield return new WaitForSeconds(3);
 
+        Debug.Log("Day Complete");
         CurrentState = GameState.Renovation;
+        startDayButton.SetActive(true);
+        
+        var newAppliance = Instantiate(possibleAppliances[Random.Range(0, possibleAppliances.Length)]);
+        newAppliance.transform.position = applianceSpawnPos.position;
+        newAppliance.EnterBox();
     }
 
     public class CustomerGroup
@@ -178,6 +207,11 @@ public class GameStateManager : MonoBehaviour
         public void BeginLogic()
         {
             Instance.StartCoroutine(CustomerLogic());
+        }
+
+        public void PrintCustomers()
+        {
+            Debug.Log(string.Join(", ", customers.Select(c=>c.name)));
         }
 
         private IEnumerator CustomerLogic()

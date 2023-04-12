@@ -315,14 +315,15 @@ PrefabInstance:
     - target: {fileID: 4319397399304834134, guid: db28fb201f46f264e85ac5310246bdc0,
         type: 3}
       propertyPath: m_Name
-      value: Plate Variant
+      value: DirtyPlate
       objectReference: {fileID: 0}
     - target: {fileID: 4319397399304834135, guid: db28fb201f46f264e85ac5310246bdc0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 34
+      value: 66
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1132514133460112460, guid: db28fb201f46f264e85ac5310246bdc0, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4319397400195374011, guid: db28fb201f46f264e85ac5310246bdc0, type: 3}
     m_AddedGameObjects:
@@ -338,8 +339,30 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5094112882053353083}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4319397399304834134, guid: db28fb201f46f264e85ac5310246bdc0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2123941854230660321}
   m_SourcePrefab: {fileID: 100100000, guid: db28fb201f46f264e85ac5310246bdc0, type: 3}
+--- !u!1 &5384851052538271556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4319397399304834134, guid: db28fb201f46f264e85ac5310246bdc0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8163689720243624722}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2123941854230660321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384851052538271556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6b6ec7c21078c46b64fc5c72f5a313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5384851052538271559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4319397399304834133, guid: db28fb201f46f264e85ac5310246bdc0,

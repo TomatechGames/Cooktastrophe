@@ -43,9 +43,9 @@ public static class CoroutineHelpers
         while (currentTime<duration)
         {
             currentTime += Time.deltaTime;
-            onPercentChanged(1-(currentTime*oneOverDuration));
+            onPercentChanged?.Invoke(1-(currentTime*oneOverDuration));
             yield return null;
         }
-        onComplete();
+        onComplete?.Invoke();
     }
 }

@@ -39,7 +39,8 @@ public class DoorPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        GameStateManager.Instance.OnStateChange -= OnGameStateChange;
+        if(GameStateManager.Instance)
+            GameStateManager.Instance.OnStateChange -= OnGameStateChange;
     }
 
     private void Update()
