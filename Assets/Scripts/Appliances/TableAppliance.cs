@@ -42,7 +42,10 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
         applianceCore = GetComponentInParent<ApplianceCore>();
         primarySocket.selectEntered.AddListener(i => StartCoroutine(CoroutineHelpers.InvokeDelayed(()=>TryDeliverFood(i.interactableObject), 0.1f)));
         primarySocket.selectExited.AddListener(i => TryReserveCustomer());
-        chairSockets.ForEach(c => c.selectExited.AddListener(i => TryReserveCustomer()));
+        chairSockets.ForEach(c => c.selectExited.AddListener(i => {
+            TryReserveCustomer();
+            c.interactionLayers &= ~InteractionLayerMask.GetMask("DirtyPlate");
+        }));
         GameStateManager.Instance.OnStateChange += s => SetActive(s == GameStateManager.GameState.Dining);
         yield return null;
         /*
@@ -103,6 +106,10 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
             Debug.Log(oldPos);
             var spawned = Instantiate(dirtyPlatePrefab);
             spawned.GetComponent<Rigidbody>().position = oldPos;
+            socket.interactionLayers |= InteractionLayerMask.GetMask("DirtyPlate");
+            if (socket.isPerformingManualInteraction && socket.hasSelection)
+                socket.EndManualInteraction();
+            socket.StartManualInteraction(spawned as IXRSelectInteractable);
         }
         customerGroup = null;
     }

@@ -62,6 +62,10 @@ public class GameStateManager : MonoBehaviour
     Vector3 dayLengthBTS;
     [SerializeField]
     AnimationCurve dayLengthCurve;
+    [SerializeField]
+    Transform playerTransform;
+    [SerializeField]
+    Transform gameOverTeleportPoint;
 
 
     #region group pool
@@ -122,21 +126,20 @@ public class GameStateManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    private void Start()
+    {
         CurrentState = GameState.Renovation;
-        //CurrentState = SceneManager.GetActiveScene().buildIndex switch
-        //{
-        //    0=>GameState.MainMenu,
-        //    1=>GameState.Renovation,
-        //    _=>GameState.MainMenu
-        //};
+        currentDay = MainMenuUIManager.StartAtDay;
     }
 
     Coroutine currentCustomerSpawner;
 
-    int currentDay = 0;
+    int currentDay = 1;
     public void StartDay()
     {
-        int customerCount = (int)EvaluateDifficultyCurve(dayLengthBTS, dayLengthCurve);
+        int customerCount = (int)EvaluateDifficultyCurve(customerCountBTS, customerCountCurve);
         int dayLength = (int)EvaluateDifficultyCurve(dayLengthBTS, dayLengthCurve);
         if (currentDay == 0)
         {
@@ -160,27 +163,39 @@ public class GameStateManager : MonoBehaviour
         {
             if (currentCustomerSpawner != null)
                 StopCoroutine(currentCustomerSpawner);
-            //show Game Over UI
+            CurrentState = GameState.Renovation;
+            playerTransform.position = gameOverTeleportPoint.position;
         }
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     IEnumerator CustomerSpawner(int customerCount, int maxGroupSize, float minnimumDayLength)
     {
+        TutorialController.Instance.AdvanceStage(0);
+        TutorialController.Instance.AdvanceStage(1);
+        TutorialController.Instance.AdvanceStage(2);
+        TutorialController.Instance.AdvanceStage(10);
+
         Queue<int> groupQueue = new();
         for (int i = 0; i < customerCount; i++)
         {
-            i--;
-            int groupSize = Random.Range(1, Mathf.Max(1, Mathf.Min(maxGroupSize, customerCount-i)));
-            i+= groupSize;
+            int groupSize = Random.Range(1, Mathf.Max(1, Mathf.Min(maxGroupSize, customerCount-i))+1);
+            i += groupSize-1;
             groupQueue.Enqueue(groupSize);
         }
         float dayLength = Mathf.Max(groupQueue.Count*10, minnimumDayLength);
         float timeBetweenGroups = groupQueue.Count != 1 ? dayLength / (groupQueue.Count - 1) : 0;
         Debug.Log("groupCount " + groupQueue.Count);
+        Debug.Log("total " + dayLength);
+        Debug.Log("timing " + timeBetweenGroups);
 
         yield return null;
 
-        StartCoroutine(CoroutineHelpers.Timer(dayLength, p=> clockHand.localRotation = Quaternion.Euler(0, 0, p * 360) , null));
+        var clockCoroutine = StartCoroutine(CoroutineHelpers.Timer(dayLength, p=> clockHand.localRotation = Quaternion.Euler(0, 0, p * 360) , null));
         while (groupQueue.Count > 0)
         {
             int groupSize = groupQueue.Dequeue();
@@ -194,13 +209,14 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("Waiting for groups to complete");
         yield return new WaitUntil(()=> activeGroups.Count==0);
 
-        Debug.Log("Waiting a bit more");
-        yield return new WaitForSeconds(3);
+        Debug.Log("Waiting for Clock");
+        yield return clockCoroutine;
 
         Debug.Log("Day Complete");
         CurrentState = GameState.Renovation;
         startDayButton.SetActive(true);
-        
+
+        TutorialController.Instance.AdvanceStage(9);
         var newAppliance = Instantiate(possibleAppliances[Random.Range(0, possibleAppliances.Length)]);
         newAppliance.transform.position = applianceSpawnPos.position;
         newAppliance.EnterBox();
@@ -290,6 +306,7 @@ public class GameStateManager : MonoBehaviour
                 }
                 yield return WaitForPathfinding(CustomerState.WaitingForOrder);
                 Debug.Log("Seat");
+                TutorialController.Instance.AdvanceStage(3);
                 for (int i = 0; i < customers.Count; i++)
                 {
                     customers[i].transform.position = customers[i].Agent.destination;
@@ -307,6 +324,7 @@ public class GameStateManager : MonoBehaviour
                 reservedTable.StartWaiting();
                 yield return WaitUntilState(CustomerState.WaitingForFood);
                 Debug.Log("Ordered");
+                TutorialController.Instance.AdvanceStage(4);
             }
 
             foreach (var customer in customers)
@@ -314,7 +332,7 @@ public class GameStateManager : MonoBehaviour
                 yield return new WaitUntil(() => customer.RecievedFood);
             }
             Debug.Log("Eating");
-
+            TutorialController.Instance.AdvanceStage(8);
             customers.ForEach(c => c.TriggerAnimation("Eat"));
             yield return new WaitForSeconds(10);
             Debug.Log("Leaving");

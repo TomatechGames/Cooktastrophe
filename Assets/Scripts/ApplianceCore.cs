@@ -42,7 +42,7 @@ public class ApplianceCore : MonoBehaviour
     public void SetSolid(bool value)
     {
         interactable.interactionLayers = value ? InteractionLayerMask.GetMask() : InteractionLayerMask.GetMask("Appliance");
-        if(boxModeActive && gameObject)
+        if(boxModeActive && gameObject!=null)
         {
             Destroy(gameObject);
         }

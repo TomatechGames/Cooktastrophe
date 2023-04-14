@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   processTime: 0
-  totalProcessTime: 6
+  totalProcessTime: 4
   processType: 0
   onProcessTimeUpdate:
     m_PersistentCalls:
