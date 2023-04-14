@@ -39,7 +39,8 @@ public class DoorPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        GameStateManager.Instance.OnStateChange -= OnGameStateChange;
+        if(GameStateManager.Instance)
+            GameStateManager.Instance.OnStateChange -= OnGameStateChange;
     }
 
     private void Update()
@@ -58,6 +59,7 @@ public class DoorPoint : MonoBehaviour
     public Transform GetPersistantTarget(CustomerGroup group)
     {
         int index = groupList.IndexOf(group);
+        Debug.Log(index);
         if (index == 0)
             return transform;
         else

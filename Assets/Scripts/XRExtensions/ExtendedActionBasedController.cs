@@ -31,16 +31,47 @@ public class ExtendedActionBasedController : ActionBasedController
         if (interactor.hasSelection)
         {
             shouldBeSelected = !(
-                selectPressed && 
-                !selectBuffer && 
-                interactor.firstInteractableSelected is IXRHoverInteractable hoverable && 
-                hoverable.interactorsHovering
-                    .Exists(i=>i is XRSocketInteractor socket && !socket.hasSelection));
+                    interactor.firstInteractableSelected is not XRGrabInteractable
+                    ||
+                    (
+                        selectPressed &&
+                        !selectBuffer &&
+                        (interactor.firstInteractableSelected as IXRHoverInteractable).interactorsHovering.Exists(i=>i is XRSocketInteractor socket && !socket.hasSelection)
+                    )
+                 );
 
             if (selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
             {
                 var hits = Physics.RaycastAll(rayInteractor.rayOriginTransform.position, rayInteractor.rayOriginTransform.forward, rayInteractor.endPointDistance);
-                var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.socketActive && socket.interactablesSelected.Count == 0 && (socket.interactionLayers.value & interactor.firstInteractableSelected.interactionLayers.value)!=0 && socket.CanHover(interactor.firstInteractableSelected as IXRHoverInteractable));
+
+                //var hitSocket = hits.FirstOrDefault(h=> h.collider && h.collider.TryGetComponent<XRSocketInteractor>(out var socket) && socket.socketActive && socket.interactablesSelected.Count == 0 && (socket.interactionLayers.value & interactor.firstInteractableSelected.interactionLayers.value)!=0 && socket.CanHover(interactor.firstInteractableSelected as IXRHoverInteractable));
+                RaycastHit hitSocket = default;
+
+                foreach (var hit in hits)
+                {
+                    if(hit.collider && hit.collider.TryGetComponent<XRSocketInteractor>(out var socket))
+                    {
+                        if (Input.GetKey(KeyCode.L))
+                            Debug.Log("Exists and has socket");
+                        if (socket.socketActive && socket.interactablesSelected.Count == 0)
+                        {
+                            if (Input.GetKey(KeyCode.L))
+                                Debug.Log("Socket active and empty");
+                            if ((socket.interactionLayers.value & interactor.firstInteractableSelected.interactionLayers.value) != 0)
+                            {
+                                if (Input.GetKey(KeyCode.L))
+                                    Debug.Log("Layers have intersection");
+                                if (socket.CanHover(interactor.firstInteractableSelected as IXRHoverInteractable))
+                                {
+                                    if (Input.GetKey(KeyCode.L))
+                                        Debug.Log("Can Hover");
+                                    hitSocket = hit;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Debug.Log(hits.FirstOrDefault().collider.gameObject, hits.FirstOrDefault().collider.gameObject);
                 if (hitSocket.collider)

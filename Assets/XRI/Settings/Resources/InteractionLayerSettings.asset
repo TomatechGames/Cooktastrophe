@@ -16,10 +16,10 @@ MonoBehaviour:
   - Default
   - Item
   - Appliance
-  - 
-  - 
-  - 
-  - 
+  - UngrabbableItem
+  - Plate
+  - OccupiedPlate
+  - DirtyPlate
   - 
   - 
   - 

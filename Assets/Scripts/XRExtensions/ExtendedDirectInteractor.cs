@@ -24,7 +24,7 @@ public class ExtendedDirectInteractor : XRDirectInteractor, IPlayerInteractor, I
         return base.CanSelect(selectable);
     }
 
-    const bool USELOGS = false;
+    static readonly bool USELOGS = false;
     public static bool ValidateSelectable(IXRSelectInteractable selectable, XRBaseInteractor interactor)
     {
         if (interactor.firstInteractableSelected == selectable)

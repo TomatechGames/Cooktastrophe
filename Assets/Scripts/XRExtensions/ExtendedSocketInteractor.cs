@@ -22,6 +22,8 @@ public class ExtendedSocketInteractor : XRSocketInteractor, ICombinableInteracto
         base.Awake();
         if (tryAttachToSelectable)
             parentInteractable = GetComponentInParent<IXRSelectInteractable>();
+        else
+            allowNewSelections = true;
         UpdateAncestorList();
     }
 
