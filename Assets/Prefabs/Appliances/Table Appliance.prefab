@@ -559,7 +559,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
@@ -730,7 +730,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
@@ -901,7 +901,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
@@ -1629,7 +1629,7 @@ PrefabInstance:
     - target: {fileID: 7547354494256641857, guid: d119df7dd7759ab43a1127e7a4ca12c6,
         type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7547354494256641857, guid: d119df7dd7759ab43a1127e7a4ca12c6,
         type: 3}
@@ -1791,7 +1791,7 @@ PrefabInstance:
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 337916233345854498, guid: 4002ad501ed412d4aaae1c0116a55ea0,
         type: 3}

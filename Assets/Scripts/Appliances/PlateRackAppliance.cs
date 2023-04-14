@@ -25,7 +25,7 @@ public class PlateRackAppliance : MonoBehaviour, IApplianceLogic
         {
             foreach (var socket in plateSockets)
             {
-                if (socket.isPerformingManualInteraction)
+                if (socket.isPerformingManualInteraction && socket.hasSelection)
                     socket.EndManualInteraction();
                 var spawned = Instantiate(platePrefab);
                 spawned.transform.position = socket.transform.position;

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - DirtyPlate
+  - ApplianceBlocker
   layers:
   - Default
   - TransparentFX

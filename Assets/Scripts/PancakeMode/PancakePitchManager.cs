@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
-using UnityEngine.Windows;
 using UnityEngine.XR.Management;
 
 public class PancakePitchManager : MonoBehaviour
@@ -45,7 +45,11 @@ public class PancakePitchManager : MonoBehaviour
 
     private void Update() 
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        if(Input.GetKeyDown(KeyCode.P))
+            Cursor.lockState = CursorLockMode.None;
+        if (Input.GetKeyDown(KeyCode.Space))
+            Cursor.lockState = CursorLockMode.Locked;
+
         pitch = Mathf.Clamp(pitch, -89, 89);
 
         transform.localRotation = Quaternion.Euler(pitch, 0, 0);

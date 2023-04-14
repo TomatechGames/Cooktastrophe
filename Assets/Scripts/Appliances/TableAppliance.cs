@@ -73,7 +73,7 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
     void TryDeliverFood(IXRSelectInteractable selectInteractable)
     {
         var childSocket = selectInteractable.AsBehavior().GetComponentInChildren<XRSocketInteractor>();
-        if (!childSocket || !childSocket.hasSelection)
+        if (!childSocket || !childSocket.hasSelection || customerGroup==null)
             return; //returns null if there is no plate or the plate is empty
         if (childSocket.firstInteractableSelected.AsBehavior().TryGetComponent<GrabItemComponent>(out var grabItem))
         {
@@ -82,7 +82,7 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
             {
                 if(selectInteractable.isSelected && selectInteractable.firstInteractorSelecting is XRBaseInteractor baseInteractor && baseInteractor.isPerformingManualInteraction)
                     baseInteractor.EndManualInteraction();
-                (selectInteractable as XRBaseInteractable).interactionLayers = InteractionLayerMask.NameToLayer("UngrabbableItem");
+                (selectInteractable as XRBaseInteractable).interactionLayers = InteractionLayerMask.GetMask("UngrabbableItem");
                 chairSockets[resultIndex].StartManualInteraction(selectInteractable);
             }
         }
@@ -96,19 +96,13 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
                 continue;
             var behavior = socket.firstInteractableSelected.AsBehavior();
             Vector3 oldPos = behavior.transform.position;
-            Quaternion oldRot = behavior.transform.rotation;
             var childSocket = behavior.GetComponentInChildren<XRSocketInteractor>();
             if(childSocket && childSocket.hasSelection)
                 Destroy(childSocket.firstInteractableSelected.AsBehavior().gameObject);
-            bool hadChildSocket = childSocket;
             Destroy(behavior.gameObject);
-            if (hadChildSocket)
-            {
-                var spawned = Instantiate(dirtyPlatePrefab);
-                spawned.transform.position = oldPos;
-                spawned.transform.rotation = oldRot;
-                socket.StartManualInteraction(spawned as IXRSelectInteractable);
-            }
+            Debug.Log(oldPos);
+            var spawned = Instantiate(dirtyPlatePrefab);
+            spawned.GetComponent<Rigidbody>().position = oldPos;
         }
         customerGroup = null;
     }

@@ -78,6 +78,7 @@ public class GameStateManager : MonoBehaviour
         newCustomer.transform.position = transform.position;
         newCustomer.transform.rotation = transform.rotation;
         newCustomer.gameObject.SetActive(true);
+        newCustomer.ResetState();
         return newCustomer;
     }
     protected void DespawnCustomer(CustomerController toDespawn)
@@ -219,6 +220,7 @@ public class GameStateManager : MonoBehaviour
             if(customersToSpawn==0)
                 yield break;
 
+            customers.Clear();
             for (int i = 0; i < customersToSpawn; i++)
             {
                 customers.Add(Instance.SpawnCustomer());
@@ -250,6 +252,7 @@ public class GameStateManager : MonoBehaviour
             {
 
                 var activeChairs = reservedTable.ActiveChairs;
+                Debug.Log(string.Join(", ", activeChairs as object[]));
                 for (int i = 0; i < customers.Count; i++)
                 {
                     customers[i].Agent.destination = activeChairs[i].transform.position;

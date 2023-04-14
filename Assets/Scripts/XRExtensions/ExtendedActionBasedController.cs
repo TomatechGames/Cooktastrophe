@@ -31,11 +31,14 @@ public class ExtendedActionBasedController : ActionBasedController
         if (interactor.hasSelection)
         {
             shouldBeSelected = !(
-                selectPressed && 
-                !selectBuffer && 
-                interactor.firstInteractableSelected is IXRHoverInteractable hoverable && 
-                hoverable.interactorsHovering
-                    .Exists(i=>i is XRSocketInteractor socket && !socket.hasSelection));
+                    interactor.firstInteractableSelected is not XRGrabInteractable
+                    ||
+                    (
+                        selectPressed &&
+                        !selectBuffer &&
+                        (interactor.firstInteractableSelected as IXRHoverInteractable).interactorsHovering.Exists(i=>i is XRSocketInteractor socket && !socket.hasSelection)
+                    )
+                 );
 
             if (selectPressed && !selectBuffer && interactor is ExtendedRayInteractor rayInteractor)
             {
