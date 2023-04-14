@@ -49,7 +49,7 @@ public class CustomerController : MonoBehaviour
 
     public bool TryDeliverFood(int id)
     {
-        if(grabItem.Id == id)
+        if(grabItem.Id == id && !RecievedFood)
         {
             DeliverFood();
             return true;
