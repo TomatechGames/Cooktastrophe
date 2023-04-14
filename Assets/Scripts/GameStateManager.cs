@@ -122,8 +122,10 @@ public class GameStateManager : MonoBehaviour
 
     public void StartDay()
     {
+        //demonstration values
         currentCustomerSpawner = StartCoroutine(CustomerSpawner(1, 1, 10));
         CurrentState = GameState.Dining;
+        startDayButton.SetActive(false);
     }
 
     public void GameOver()
@@ -150,8 +152,8 @@ public class GameStateManager : MonoBehaviour
         float timeBetweenGroups = groupQueue.Count != 1 ? dayLength / (groupQueue.Count - 1) : 0;
         Debug.Log("groupCount " + groupQueue.Count);
 
-        startDayButton.SetActive(false);
         yield return null;
+
         StartCoroutine(CoroutineHelpers.Timer(dayLength, p=> clockHand.localRotation = Quaternion.Euler(0, 0, p * 360) , null));
         while (groupQueue.Count > 0)
         {
