@@ -44,12 +44,25 @@ public class GameStateManager : MonoBehaviour
     ApplianceCore[] possibleAppliances;
     [SerializeField]
     Transform applianceSpawnPos;
-    [field: SerializeField]
-    public float DoorPatience { get; private set; }
-    [field: SerializeField]
-    public float OrderPatience { get; private set; }
-    [field: SerializeField]
-    public float FoodPatience { get; private set; }
+    [SerializeField]
+    float doorPatience;
+    public float DoorPatience => doorPatience;
+    [SerializeField]
+    float orderPatience;
+    public float OrderPatience => orderPatience;
+    [SerializeField]
+    float foodPatience;
+    public float FoodPatience => foodPatience;
+    [Header("Game Balance")]
+    [SerializeField]
+    Vector3 customerCountBTS;
+    [SerializeField]
+    AnimationCurve customerCountCurve;
+    [SerializeField]
+    Vector3 dayLengthBTS;
+    [SerializeField]
+    AnimationCurve dayLengthCurve;
+
 
     #region group pool
     Queue<CustomerGroup> groupPool = new();
@@ -120,17 +133,30 @@ public class GameStateManager : MonoBehaviour
 
     Coroutine currentCustomerSpawner;
 
+    int currentDay = 0;
     public void StartDay()
     {
-        //demonstration values
-        currentCustomerSpawner = StartCoroutine(CustomerSpawner(1, 1, 10));
+        int customerCount = (int)EvaluateDifficultyCurve(dayLengthBTS, dayLengthCurve);
+        int dayLength = (int)EvaluateDifficultyCurve(dayLengthBTS, dayLengthCurve);
+        if (currentDay == 0)
+        {
+            customerCount = 1;
+            dayLength = 60;
+        }
+        currentCustomerSpawner = StartCoroutine(CustomerSpawner(customerCount, 2, dayLength));
         CurrentState = GameState.Dining;
         startDayButton.SetActive(false);
     }
 
+    float EvaluateDifficultyCurve(Vector3 difficultyBTS, AnimationCurve difficultyCurve)
+    {
+        float basis = difficultyBTS.x + Mathf.Floor(currentDay / difficultyBTS.y) * difficultyBTS.z;
+        return basis + difficultyCurve.Evaluate((currentDay % difficultyBTS.y)/ difficultyBTS.y) * difficultyBTS.z;
+    }
+
     public void GameOver()
     {
-        if (CurrentState == GameState.Dining)
+        if (CurrentState == GameState.Dining && currentDay!=0)
         {
             if (currentCustomerSpawner != null)
                 StopCoroutine(currentCustomerSpawner);
@@ -144,7 +170,7 @@ public class GameStateManager : MonoBehaviour
         for (int i = 0; i < customerCount; i++)
         {
             i--;
-            int groupSize = Random.Range(1, Mathf.Max(1, maxGroupSize));
+            int groupSize = Random.Range(1, Mathf.Max(1, Mathf.Min(maxGroupSize, customerCount-i)));
             i+= groupSize;
             groupQueue.Enqueue(groupSize);
         }
@@ -178,6 +204,9 @@ public class GameStateManager : MonoBehaviour
         var newAppliance = Instantiate(possibleAppliances[Random.Range(0, possibleAppliances.Length)]);
         newAppliance.transform.position = applianceSpawnPos.position;
         newAppliance.EnterBox();
+
+        currentDay++;
+        PlayerPrefs.SetInt("maxDays", Mathf.Max(currentDay, PlayerPrefs.GetInt("maxDays")));
     }
 
     public class CustomerGroup
@@ -227,13 +256,13 @@ public class GameStateManager : MonoBehaviour
             {
                 customers.Add(Instance.SpawnCustomer());
             }
-
-
             reservedTable = null;
             customers.ForEach(c => c.Agent.stoppingDistance = 1);
             CurrentState = CustomerState.WaitingAtDoor;
             DoorPoint.Instance.AddGroup(this);
-            timerCoroutine = Instance.StartCoroutine(CoroutineHelpers.Timer(Instance.FoodPatience, p => DoorPatience = p, Instance.GameOver));
+            timerCoroutine = Instance.StartCoroutine(
+                CoroutineHelpers.Timer(Instance.FoodPatience, p => DoorPatience = p, Instance.GameOver)
+                );
             customers.ForEach(c => c.TriggerAnimation("Idle"));
             Debug.Log("Door");
             yield return WaitUntilState(CustomerState.Pathfinding);
