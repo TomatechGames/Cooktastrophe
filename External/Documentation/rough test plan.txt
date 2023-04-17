@@ -1,7 +1,7 @@
 Things to test:
 
 Tadhg
-- pathfinding
+- starting a day prevents objects from being grabbed
 - functionality of hob
 Aisha
 - functionality of fridge
@@ -12,3 +12,8 @@ Karl
 Jane
 - customers leave table when given correct food
 - customers dont leave table when given wrong food
+
+Each test needs:
+	Black box: manual testing without code knowledge (basic shit)
+	White box: recird results of manual testing with code knowledge (equiv partitioning, bound value analysis)
+	Unit Tests: automated testing conditions
