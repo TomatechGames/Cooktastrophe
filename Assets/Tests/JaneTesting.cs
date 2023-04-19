@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 public class JaneTesting
@@ -25,9 +26,9 @@ public class JaneTesting
         yield return null;
     }
 
-    (TableAppliance. GrabItemCompenent, GameStateManager.CustomerGroup)GenerateComponents()
+    (TableAppliance, GrabItemComponent, GameStateManager.CustomerGroup)GenerateComponents()
     {
         var group = new GameStateManager.CustomerGroup();
-        return (group, Item2);
+        return (null, null, group);
     }
-} g
+}
