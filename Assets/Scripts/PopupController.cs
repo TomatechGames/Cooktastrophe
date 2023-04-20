@@ -17,7 +17,8 @@ public class PopupController : MonoBehaviour
     private void Start()
     {
         UpdateActive();
-        cachedTarget = Camera.main.transform;
+        if (Camera.main)
+            cachedTarget = Camera.main.transform;
     }
 
     public void SetPercent(float percent)

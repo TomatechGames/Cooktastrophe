@@ -13,7 +13,7 @@ public class HobAppliance : MonoBehaviour
     public UnityEvent<float> onProcessTimeUpdate;
     public UnityEvent<bool> onProcessActivityUpdate;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         itemSocket = GetComponentInChildren<XRSocketInteractor>();
         itemSocket.selectEntered.AddListener(e => StartProcess(e.interactableObject));
@@ -22,6 +22,13 @@ public class HobAppliance : MonoBehaviour
 
     public void StartProcess(IXRSelectInteractable interactable)
     {
+        if (!itemSocket.IsSelecting(interactable))
+        {
+            if (itemSocket.hasSelection)
+                return;
+            else
+                itemSocket.StartManualInteraction(interactable);
+        }
         if((interactable as MonoBehaviour).TryGetComponent<GrabItemComponent>(out var grabItem))
         {
             var recipe = GrabItemDatabaseHolder.Database.GetProcessEntry(grabItem.GrabItem.Id, processType);

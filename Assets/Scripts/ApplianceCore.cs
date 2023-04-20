@@ -34,6 +34,7 @@ public class ApplianceCore : MonoBehaviour
         interactable = GetComponent<XRGrabInteractable>();
         interactable.selectEntered.AddListener(Flatten);
         interactable.selectExited.AddListener(Unflatten);
+        if(GameStateManager.Instance)
         GameStateManager.Instance.OnStateChange += s => SetSolid(s==GameStateManager.GameState.Dining);
     }
 

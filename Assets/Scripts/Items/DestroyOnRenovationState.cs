@@ -8,7 +8,8 @@ public class DestroyOnRenovationState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameStateManager.Instance.OnStateChange += DestroyOnRenovation;
+        if (GameStateManager.Instance)
+            GameStateManager.Instance.OnStateChange += DestroyOnRenovation;
     }
 
     private void DestroyOnRenovation(GameStateManager.GameState s)

@@ -6,9 +6,15 @@ using UnityEngine;
 public class TestPrefabSource : MonoBehaviour
 {
     static TestPrefabSource instance;
-    private void Awake()
+    static TestPrefabSource Instance
     {
-        instance = this;
+        get {
+            if (!instance)
+            {
+                instance = Instantiate(Resources.Load("TestPrefabSource") as GameObject).GetComponent<TestPrefabSource>();
+            }
+            return instance; 
+        }
     }
 
     [SerializeField]
@@ -16,6 +22,6 @@ public class TestPrefabSource : MonoBehaviour
     
     public static T GetPrefabWithBehavior<T>() where T : MonoBehaviour
     {
-        return instance.prefabs.Select(b => b.GetComponent<T>()).FirstOrDefault(b => b);
+        return Instance.prefabs.Select(b => b.GetComponent<T>()).FirstOrDefault(b => b);
     }
 }
