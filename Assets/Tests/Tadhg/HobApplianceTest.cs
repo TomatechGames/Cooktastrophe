@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class HobApplianceTest
 {
@@ -19,10 +20,19 @@ public class HobApplianceTest
     [UnityTest]
     public IEnumerator HobApplianceTestWithEnumeratorPasses()
     {
-        SceneManager.LoadScene(1);
+        //doesnt depend on cooking scene any more
+        //SceneManager.LoadScene(1);
         var components = GenerateComponents();
-        //do things with the components
         yield return null;
+        //item ID of raw meat
+        var startID = -5073;
+        components.Item2.SetNewItemID(startID);
+        components.Item1.StartProcess(components.Item2.GetComponent<XRGrabInteractable>());
+
+        yield return new WaitForSeconds(components.Item1.totalProcessTime);
+
+        //item ID of rare meat
+        Assert.AreEqual(2266, components.Item2.GrabItem.Id);
     }
 
     (HobAppliance, GrabItemComponent) GenerateComponents()
