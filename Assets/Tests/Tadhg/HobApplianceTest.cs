@@ -8,15 +8,19 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class HobApplianceTest
 {
+    const int RAW_MEAT_ID = -5073;
+    const int RARE_MEAT_ID = 2266;
+    const int MEDIUM_MEAT_ID = 23070;
+    const int WELL_DONE_MEAT_ID = 27442;
     // A Test behaves as an ordinary method
-    [Test]
-    public void HobApplianceTestSimplePasses()
-    {
-        // Use the Assert class to test conditions
-    }
+    //[Test]
+    //public void HobApplianceTestSimplePasses()
+    //{
+    //    // Use the Assert class to test conditions
+    //}
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
+    // test 1
+    // start process on item that can be processed once
     [UnityTest]
     public IEnumerator HobApplianceTestWithEnumeratorPasses()
     {
@@ -24,23 +28,43 @@ public class HobApplianceTest
         //SceneManager.LoadScene(1);
         var components = GenerateComponents();
         yield return null;
-        //item ID of raw meat
-        var startID = -5073;
-        components.Item2.SetNewItemID(startID);
+
+        components.Item2.SetNewItemID(RAW_MEAT_ID);
         components.Item1.StartProcess(components.Item2.GetComponent<XRGrabInteractable>());
 
         yield return new WaitForSeconds(components.Item1.totalProcessTime);
+        yield return null;
 
         //item ID of rare meat
-        Assert.AreEqual(2266, components.Item2.GrabItem.Id);
+        Assert.AreEqual(RARE_MEAT_ID, components.Item2.GrabItem.Id);
     }
 
-    (HobAppliance, GrabItemComponent) GenerateComponents()
+    //test 2
+    //start processing item
+    //interrupt process
+    //start process on new item
+
+    //test 3
+    //start processing item with no process recipe
+
+    //test 4
+    //start processing interactable with no grabitemcomponent
+
+    //test 5
+    //start process on item that can be processed 2 times
+
+
+    //test 6
+    //start process on item that can be processed 2 times
+    // wait the equivelent of 3 process lengths
+
+
+    (HobAppliance, GrabItemComponent, GrabItemComponent) GenerateComponents()
     {
         var hob = Object.Instantiate(TestPrefabSource.GetPrefabWithBehavior<HobAppliance>());
-        hob.transform.position = new Vector3(0, -50, 0);
         var item = Object.Instantiate(TestPrefabSource.GetPrefabWithBehavior<GrabItemComponent>());
-        item.transform.position = new Vector3(0, -50, 0);
-        return (hob, item);
+        var extraItem = Object.Instantiate(TestPrefabSource.GetPrefabWithBehavior<GrabItemComponent>());
+
+        return (hob, item, extraItem);
     }
 }
