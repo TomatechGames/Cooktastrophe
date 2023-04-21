@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class HobAppliance : MonoBehaviour
 {
     XRSocketInteractor itemSocket;
+    public XRSocketInteractor ItemSocket => itemSocket;
     public float processTime;
     public float totalProcessTime;
     public ProcessType processType;
@@ -20,7 +21,7 @@ public class HobAppliance : MonoBehaviour
         itemSocket.selectExited.AddListener(e => StopProcess());
     }
 
-    public void StartProcess(IXRSelectInteractable interactable)
+    void StartProcess(IXRSelectInteractable interactable)
     {
         if (!itemSocket.IsSelecting(interactable))
         {
@@ -45,7 +46,7 @@ public class HobAppliance : MonoBehaviour
             onProcessActivityUpdate.Invoke(false);
     }
     
-    public void StopProcess()
+    void StopProcess()
     {
         processTime = -1;
         onProcessActivityUpdate.Invoke(false);

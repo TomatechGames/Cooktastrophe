@@ -22,41 +22,112 @@ public class HobApplianceTest
     // test 1
     // start process on item that can be processed once
     [UnityTest]
-    public IEnumerator HobApplianceTestWithEnumeratorPasses()
+    public IEnumerator HobApplianceTestSingleItem()
     {
-        //doesnt depend on cooking scene any more
-        //SceneManager.LoadScene(1);
         var components = GenerateComponents();
         yield return null;
 
-        components.Item2.SetNewItemID(RAW_MEAT_ID);
-        components.Item1.StartProcess(components.Item2.GetComponent<XRGrabInteractable>());
+        components.Item2.SetNewItemID(MEDIUM_MEAT_ID);
+        components.Item1.ItemSocket.StartManualInteraction(components.Item2.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
 
         yield return new WaitForSeconds(components.Item1.totalProcessTime);
         yield return null;
 
-        //item ID of rare meat
-        Assert.AreEqual(RARE_MEAT_ID, components.Item2.GrabItem.Id);
+        Assert.AreEqual(WELL_DONE_MEAT_ID, components.Item2.GrabItem.Id);
     }
 
     //test 2
     //start processing item
     //interrupt process
     //start process on new item
+    [UnityTest]
+    public IEnumerator HobApplianceTestSingleItemAfterInterruption()
+    {
+        var components = GenerateComponents();
+        yield return null;
+
+        components.Item2.SetNewItemID(MEDIUM_MEAT_ID);
+        components.Item3.SetNewItemID(MEDIUM_MEAT_ID);
+        components.Item1.ItemSocket.StartManualInteraction(components.Item2.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+        yield return null;
+        components.Item1.ItemSocket.EndManualInteraction();
+        yield return null;
+        components.Item1.ItemSocket.StartManualInteraction(components.Item3.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+
+
+        yield return new WaitForSeconds(components.Item1.totalProcessTime);
+        yield return null;
+
+        Assert.AreEqual(MEDIUM_MEAT_ID, components.Item2.GrabItem.Id);
+        Assert.AreEqual(WELL_DONE_MEAT_ID, components.Item3.GrabItem.Id);
+    }
 
     //test 3
-    //start processing item with no process recipe
+    //start process on item without recipe
+    [UnityTest]
+    public IEnumerator HobApplianceTestUncookableItem()
+    {
+        var components = GenerateComponents();
+        yield return null;
+
+        components.Item2.SetNewItemID(WELL_DONE_MEAT_ID);
+        components.Item1.ItemSocket.StartManualInteraction(components.Item2.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+
+        yield return new WaitForSeconds(components.Item1.totalProcessTime);
+        yield return null;
+
+        Assert.AreEqual(WELL_DONE_MEAT_ID, components.Item2.GrabItem.Id);
+    }
 
     //test 4
-    //start processing interactable with no grabitemcomponent
+    //start process on item without GrabItemComponent
+    [UnityTest]
+    public IEnumerator HobApplianceTestNonGrabItem()
+    {
+        var components = GenerateComponents();
+        var basicGrabInteractable = new GameObject().AddComponent<XRGrabInteractable>() as IXRSelectInteractable;
+        yield return null;
+
+        components.Item1.ItemSocket.StartManualInteraction(basicGrabInteractable);
+
+        // we're just making sure an error doesnt occur when trying to do this, theres nothing else to assert
+    }
 
     //test 5
     //start process on item that can be processed 2 times
+    [UnityTest]
+    public IEnumerator HobApplianceTestDoubleItem()
+    {
+        var components = GenerateComponents();
+        yield return null;
+
+        components.Item2.SetNewItemID(RARE_MEAT_ID);
+        components.Item1.ItemSocket.StartManualInteraction(components.Item2.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+
+        yield return new WaitForSeconds(components.Item1.totalProcessTime*2);
+        yield return null;
+
+        Assert.AreEqual(WELL_DONE_MEAT_ID, components.Item2.GrabItem.Id);
+    }
 
 
     //test 6
     //start process on item that can be processed 2 times
-    // wait the equivelent of 3 process lengths
+    //wait for duration of 3 times
+    [UnityTest]
+    public IEnumerator HobApplianceTestDoubleItemOvertime()
+    {
+        var components = GenerateComponents();
+        yield return null;
+
+        components.Item2.SetNewItemID(RARE_MEAT_ID);
+        components.Item1.ItemSocket.StartManualInteraction(components.Item2.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+
+        yield return new WaitForSeconds(components.Item1.totalProcessTime * 3);
+        yield return null;
+
+        Assert.AreEqual(WELL_DONE_MEAT_ID, components.Item2.GrabItem.Id);
+    }
 
 
     (HobAppliance, GrabItemComponent, GrabItemComponent) GenerateComponents()
