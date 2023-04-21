@@ -146,7 +146,12 @@ public class GameStateManager : MonoBehaviour
             customerCount = 1;
             dayLength = 60;
         }
-        currentCustomerSpawner = StartCoroutine(CustomerSpawner(customerCount, 2, dayLength));
+        StartCustomDay(customerCount, 2, dayLength);
+    }
+
+    public void StartCustomDay(int customerCount, int maxGroupSize, float minnimumDayLength)
+    {
+        currentCustomerSpawner = StartCoroutine(CustomerSpawner(customerCount, maxGroupSize, minnimumDayLength));
         CurrentState = GameState.Dining;
         startDayButton.SetActive(false);
     }
