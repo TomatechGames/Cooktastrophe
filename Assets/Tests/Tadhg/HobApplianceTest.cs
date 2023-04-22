@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.XR.Interaction.Toolkit;
+using static GameStateManager;
 
 public class HobApplianceTest
 {
@@ -46,8 +47,8 @@ public class HobApplianceTest
         var components = GenerateComponents();
         yield return null;
 
-        components.Item2.SetNewItemID(MEDIUM_MEAT_ID);
-        components.Item3.SetNewItemID(MEDIUM_MEAT_ID);
+        components.Item2.SetNewItemID(RAW_MEAT_ID);
+        components.Item3.SetNewItemID(table.CustomerGroup.Customers[0].GrabItemEntry.Id);
         components.Item1.ItemSocket.StartManualInteraction(components.Item2.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
         yield return null;
         components.Item1.ItemSocket.EndManualInteraction();

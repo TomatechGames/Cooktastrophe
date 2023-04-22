@@ -21,7 +21,7 @@ public class CustomerController : MonoBehaviour
     MeshRenderer meshRenderer;
 
     GrabItemReference grabItem = new();
-    public GrabItemEntry grabItemEntry => grabItem.Entry;
+    public GrabItemEntry GrabItemEntry => grabItem.Entry;
     public bool RecievedFood { get; private set; }
 
     public Transform PersistentTarget { get; set; }

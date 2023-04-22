@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
-public class BinTest : MonoBehaviour
+public class BinTest
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
+    // `yield return null;` to skip a frame.
+    [UnityTest]
+    public IEnumerator BinTestWithEnumeratorPasses()
     {
-        
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
     }
 }

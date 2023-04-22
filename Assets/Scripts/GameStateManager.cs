@@ -67,6 +67,13 @@ public class GameStateManager : MonoBehaviour
     [SerializeField]
     Transform gameOverTeleportPoint;
 
+    static bool testingSkipPathfinding = false;
+    public static bool TestingSkipPathfinding
+    {
+        get { return testingSkipPathfinding; }
+        set { testingSkipPathfinding = value; }
+    }
+
 
     #region group pool
     Queue<CustomerGroup> groupPool = new();
@@ -233,6 +240,7 @@ public class GameStateManager : MonoBehaviour
     public class CustomerGroup
     {
         List<CustomerController> customers = new();
+        public List<CustomerController> Customers => customers;
         TableAppliance reservedTable;
         int customersToSpawn = 0;
 
@@ -267,7 +275,7 @@ public class GameStateManager : MonoBehaviour
             Debug.Log(string.Join(", ", customers.Select(c=>c.name)));
         }
 
-        private IEnumerator CustomerLogic()
+        private IEnumerator CustomerLogic() 
         {
             if(customersToSpawn==0)
                 yield break;
@@ -406,7 +414,10 @@ public class GameStateManager : MonoBehaviour
                 customer.TriggerAnimation("Walk");
             }
             Debug.Log("Waiting for pathfinding...");
-            yield return CoroutineHelpers.WaitUntilAll(customers, c => CurrentState != CustomerState.Pathfinding || (c.transform.position - c.Agent.destination).magnitude < 0.25f);
+            if (!TestingSkipPathfinding)
+            {
+                yield return CoroutineHelpers.WaitUntilAll(customers, c => CurrentState != CustomerState.Pathfinding || (c.transform.position - c.Agent.destination).magnitude < 0.25f);
+            }
             Debug.Log("Pathfinding complete");
             if (CurrentState == CustomerState.Pathfinding)
                 CurrentState = stateOnComplete;

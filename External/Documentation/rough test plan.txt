@@ -1,7 +1,7 @@
 Things to test:
 
 Tadhg
-- starting a day prevents objects from being grabbed
+- starting a day prevents appliances from being grabbed
 - functionality of hob
 Aisha
 - functionality of fridge

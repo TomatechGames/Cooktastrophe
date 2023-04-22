@@ -15,6 +15,7 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
     [SerializeField]//order should match chair list
     List<XRSocketInteractor> chairSockets;
     CustomerGroup customerGroup;
+    public CustomerGroup CustomerGroup => customerGroup;
     [SerializeField]
     List<Transform> chairs;
     [SerializeField]
