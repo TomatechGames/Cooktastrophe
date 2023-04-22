@@ -422,5 +422,10 @@ public class GameStateManager : MonoBehaviour
             if (CurrentState == CustomerState.Pathfinding)
                 CurrentState = stateOnComplete;
         }
+
+        public void SetNewItemID(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

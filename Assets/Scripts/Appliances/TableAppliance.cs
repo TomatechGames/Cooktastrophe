@@ -15,7 +15,7 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
     [SerializeField]//order should match chair list
     List<XRSocketInteractor> chairSockets;
     CustomerGroup customerGroup;
-    public CustomerGroup CustomerGroup => customerGroup;
+    public CustomerGroup customerGroup => customerGroup;
     [SerializeField]
     List<Transform> chairs;
     [SerializeField]
@@ -116,6 +116,7 @@ public class TableAppliance : MonoBehaviour, IApplianceLogic
     }
 
     Coroutine timerCoroutine;
+    public object ItemSocket;
 
     public void StartWaiting()
     {
