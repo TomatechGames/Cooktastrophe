@@ -26,16 +26,13 @@ public class CorrectOrder
 
     
     [UnityTest]
-
-    
-
-   public IEnumerator CorrectOrderReceivedTest(TableAppliance tableAppliance)
+    public IEnumerator CorrectOrderReceivedTest(TableAppliance tableAppliance)
     {
         var components = GenerateComponents();
         yield return null;
 
         components.Item2.SetNewItemID(MEDIUM_MEAT_ID);
-        components.Item3.SetNewItemID(tableAppliance.customerGroup.Customers[0].GrabItemEntry.Id);
+        components.Item3.SetNewItemID(tableAppliance.CustomerGroup.Customers[0].GrabItemEntry.Id);
 
     }
 
