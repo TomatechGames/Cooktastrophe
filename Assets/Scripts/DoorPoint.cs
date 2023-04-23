@@ -9,8 +9,9 @@ public class DoorPoint : MonoBehaviour
 {
     static DoorPoint instance;
     //create getter
-    public static DoorPoint Instance { get { return instance; } }
+    public static DoorPoint Instance => instance;
     List<CustomerGroup> groupList = new();//creating new queue for cutsomers lined up at door
+    public List<CustomerGroup> GroupList => groupList;
 
     List<TableAppliance> tables = new();
 
