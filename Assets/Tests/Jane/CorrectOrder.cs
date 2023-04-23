@@ -65,10 +65,18 @@ public class CorrectOrder
         GameStateManager.Instance.StartDay();
         GameStateManager.TestingSkipPathfinding = true;
         yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
         table.StopWaiting();
         yield return null;
         item.SetNewItemID(table.CustomerGroup.Customers[0].GrabItemEntry.Id);//Garuntees we are picking the ID of the food that the customer wants
-        table.PrimarySocket.StartManualInteraction(item.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+        var plate = Object.FindObjectOfType<PlateRackAppliance>().GetComponentInChildren<XRSocketInteractor>().firstInteractableSelected as XRGrabInteractable;
+        plate.GetComponentInChildren<XRSocketInteractor>().StartManualInteraction(item.GetComponent<XRGrabInteractable>() as IXRSelectInteractable);
+        yield return null;
+        yield return null;
+        table.PrimarySocket.StartManualInteraction(plate as IXRSelectInteractable);
+        yield return new WaitForSeconds(0.1f);//The table waits this long before moving to the other socket
         yield return null;
         Assert.IsFalse(table.PrimarySocket.hasSelection);
         //This test ensures that no errors occur when an item is placed on the table with no customer group
