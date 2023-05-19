@@ -60,7 +60,6 @@ public class CorrectOrder
         yield return null;
 
         var table = Object.FindObjectOfType<TableAppliance>();//finds the table and puts it into the variable
-        //Try to put some food onto the table while the day hasnt been started, meaning no groups are linked to the table
         var item = Object.Instantiate(TestPrefabSource.GetPrefabWithBehavior<GrabItemComponent>());
         GameStateManager.Instance.StartDay();
         GameStateManager.TestingSkipPathfinding = true;
@@ -79,7 +78,7 @@ public class CorrectOrder
         yield return new WaitForSeconds(0.1f);//The table waits this long before moving to the other socket
         yield return null;
         Assert.IsFalse(table.PrimarySocket.hasSelection);
-        //This test ensures that no errors occur when an item is placed on the table with no customer group
+        
 
 
 
